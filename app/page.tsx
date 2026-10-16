@@ -25,21 +25,7 @@ const initialState: FormState = {
 };
 
 function AKMonogram() {
-  return (
-    <svg className="ak-monogram" viewBox="0 0 220 150" role="img" aria-label="AK floral monogram">
-      <text className="ak-monogram-a" x="28" y="113">A</text>
-      <text className="ak-monogram-k" x="120" y="113">K</text>
-      <text className="ak-monogram-amp" x="82" y="115">&amp;</text>
-      <path className="ak-flourish" d="M15 83C49 45 78 51 112 89c34 38 71 50 98 13" />
-      <path className="ak-flourish" d="M23 126c25 1 43-8 52-27" />
-      <path className="ak-flourish" d="M151 89c12-22 13-45 2-62" />
-      <path className="ak-leaf" d="M49 119c-8-15-22-18-34-13 8 14 20 18 34 13Z" />
-      <path className="ak-leaf" d="M154 64c-2-19 7-32 22-41 1 18-6 31-22 41Z" />
-      <path className="ak-leaf" d="M162 83c10-13 23-16 36-12-8 13-20 17-36 12Z" />
-      <circle className="ak-berry" cx="151" cy="48" r="3.3" />
-      <circle className="ak-berry" cx="166" cy="70" r="3.3" />
-    </svg>
-  );
+  return <img className="ak-monogram" src="/elegant-gold-ak-floral-monogram.png" alt="Adrian and KC floral gold monogram" loading="eager" />;
 }
 
 export default function HomePage() {
