@@ -107,7 +107,7 @@ export default function HomePage() {
         </button>
       )}
       <nav className="nav" aria-label="Main navigation">
-        <a className="brand" href="#top">A <span className="amp">&amp;</span> K</a>
+        <a className="brand" href="#top" aria-label="Adrian and KC home"><span className="brand-monogram"><AKMonogram /></span></a>
         <div className="nav-links"><a href="#details">Details</a><a href="#rsvp">RSVP</a><a href="#travel">Travel</a></div>
       </nav>
       <main id="top">

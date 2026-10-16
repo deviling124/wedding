@@ -49,7 +49,8 @@ button, input, select, textarea { font: inherit; }
 @keyframes promptPulse { 0%, 100% { opacity: .48; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-2px); } }
 .envelope-overlay:focus-visible { outline: 3px solid var(--cream); outline-offset: -8px; }
 .nav { position: fixed; z-index: 10; inset: 0 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 18px 5vw; background: rgba(251,245,236,.84); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(209,189,168,.65); }
-.brand { font-family: var(--serif); font-size: 1.25rem; letter-spacing: .04em; text-decoration: none; }
+.brand { display: inline-flex; align-items: center; text-decoration: none; }
+.brand-monogram { display: block; width: 74px; height: 48px; padding: 2px; background: radial-gradient(circle, rgba(184,146,92,.42), #090705 72%); border-radius: 8px; box-shadow: 0 4px 12px rgba(70,53,46,.14); }
 .nav-links { display: flex; gap: 24px; font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .nav-links a { text-decoration: none; }
 .nav-links a:hover { color: var(--coral); }
