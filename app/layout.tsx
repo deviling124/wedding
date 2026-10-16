@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Maya & Theo — Our Wedding",
-  description: "An invitation to celebrate the wedding of Maya & Theo.",
+  title: "Adrian & KC — Our Wedding",
+  description: "An invitation to celebrate the wedding of Adrian & KC.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

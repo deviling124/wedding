@@ -78,9 +78,9 @@ export default function HomePage() {
       <main id="top">
         <section className="hero">
           <div className="hero-inner">
-            <div className="hero-seal" aria-hidden="true">M <span>&amp;</span> T</div>
+            <div className="hero-seal" aria-hidden="true">A <span>&amp;</span> K</div>
             <div className="eyebrow">Together with our families</div>
-            <h1>Maya <span className="amp">&amp;</span> Theo</h1>
+            <h1>Adrian <span className="amp">&amp;</span> KC</h1>
             <div className="hero-date">Saturday, 12 September 2027 &nbsp;·&nbsp; Singapore</div>
             <p className="hero-note">We’re getting married, and it would mean the world to have you with us for the weekend.</p>
             <a className="button" href="#rsvp">Please RSVP <span aria-hidden="true">↗</span></a>
@@ -118,8 +118,8 @@ export default function HomePage() {
             <div className="rsvp-intro"><div className="eyebrow">Before we plan the table</div><h2>Will you join us?</h2><p>Please reply by 1 July 2027. Your invitation code is printed on your invitation.</p></div>
             <div className="rsvp-card">
               <form onSubmit={submit}>
-                <label>Invitation code<input value={form.inviteCode} onChange={(e) => update("inviteCode", e.target.value)} required placeholder="MAYA-THEO-01" autoCapitalize="characters" /></label>
-                <div className="two"><label>First name<input value={form.firstName} onChange={(e) => update("firstName", e.target.value)} required autoComplete="given-name" placeholder="Maya" /></label><label>Last name<input value={form.lastName} onChange={(e) => update("lastName", e.target.value)} required autoComplete="family-name" placeholder="Chen" /></label></div>
+                <label>Invitation code<input value={form.inviteCode} onChange={(e) => update("inviteCode", e.target.value)} required placeholder="ADRIAN-KC-01" autoCapitalize="characters" /></label>
+                <div className="two"><label>First name<input value={form.firstName} onChange={(e) => update("firstName", e.target.value)} required autoComplete="given-name" placeholder="Adrian" /></label><label>Last name<input value={form.lastName} onChange={(e) => update("lastName", e.target.value)} required autoComplete="family-name" placeholder="KC" /></label></div>
                 <label>Email address<input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} required autoComplete="email" placeholder="you@example.com" /></label>
                 <fieldset style={{ border: 0, padding: 0, margin: 0 }}><legend style={{ fontSize: ".78rem", letterSpacing: ".05em", fontWeight: 700 }}>Your reply</legend><div className="radio-row"><label className="radio"><input type="radio" name="attendance" value="joyfully-accept" checked={form.attendance === "joyfully-accept"} onChange={(e) => update("attendance", e.target.value)} required /><span>Joyfully accept</span></label><label className="radio"><input type="radio" name="attendance" value="regretfully-decline" checked={form.attendance === "regretfully-decline"} onChange={(e) => update("attendance", e.target.value)} /><span>Regretfully decline</span></label></div></fieldset>
                 <label>Number of guests<select value={form.guests} onChange={(e) => update("guests", e.target.value)}><option value="1">1 guest</option><option value="2">2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option></select></label>
@@ -139,11 +139,11 @@ export default function HomePage() {
           <div className="travel reveal">
             <div className="travel-card"><div className="number">01</div><h3>Getting there</h3><p>The Glasshouse is a 15-minute taxi ride from the city centre. Ride-share drop-off is available at the main gate.</p></div>
             <div className="travel-card"><div className="number">02</div><h3>Where to stay</h3><p>We recommend choosing a hotel around Tiong Bahru or Robertson Quay for a relaxed mix of food, coffee, and river walks.</p></div>
-            <div className="travel-card"><div className="number">03</div><h3>Questions?</h3><p>Send a note to <a href="mailto:hello@mayaandtheo.example">hello@mayaandtheo.example</a> and we’ll help however we can.</p></div>
+            <div className="travel-card"><div className="number">03</div><h3>Questions?</h3><p>Send a note to <a href="mailto:hello@adrianandkc.example">hello@adrianandkc.example</a> and we’ll help however we can.</p></div>
           </div>
         </section>
       </main>
-      <footer><h2>See you there.</h2><p>With love, Maya &amp; Theo</p></footer>
+      <footer><h2>See you there.</h2><p>With love, Adrian &amp; KC</p></footer>
     </>
   );
 }
