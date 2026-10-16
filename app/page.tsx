@@ -25,7 +25,7 @@ const initialState: FormState = {
 };
 
 function AKMonogram() {
-  return <img className="ak-monogram" src="/elegant-gold-ak-floral-monogram.png" alt="Adrian and KC floral gold monogram" loading="eager" />;
+  return <img className="ak-monogram" src="/Luxurious Gold A K Monogram with Botanical Flourishes.png" alt="Adrian and KC floral gold monogram" loading="eager" />;
 }
 
 export default function HomePage() {
