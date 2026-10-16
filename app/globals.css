@@ -28,7 +28,7 @@ button, input, select, textarea { font: inherit; }
 .envelope-back::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(135deg, rgba(255,255,255,.28), transparent 45%, rgba(70,53,46,.05)); }
 .envelope-card { position: absolute; left: 6%; right: 6%; top: -11%; height: 84%; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 4px; background: linear-gradient(145deg, #fffdf9 0%, #f7eee3 100%); box-shadow: 0 12px 28px rgba(25,16,13,.24), 0 2px 5px rgba(25,16,13,.1); transform: translateY(30%) translateZ(5px); transition: transform 1.05s cubic-bezier(.16,1,.3,1), box-shadow 1s ease; z-index: 1; }
 .envelope-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255,255,255,.72), transparent 45%); }
-.envelope-card-mark { position: relative; z-index: 1; display: block; width: 168px; height: 112px; color: var(--gold); }
+.envelope-card-mark { position: relative; z-index: 1; display: block; width: 168px; height: 112px; padding: 4px; color: var(--gold); background: radial-gradient(circle, rgba(184,146,92,.42), #090705 72%); border-radius: 10px; box-shadow: 0 5px 14px rgba(25,16,13,.24); }
 .ak-monogram { display: block; width: 100%; height: 100%; object-fit: contain; }
 .ak-monogram-a, .ak-monogram-k { font-family: 'Bodoni Moda', 'Times New Roman', serif; font-size: 88px; font-weight: 400; letter-spacing: -.08em; fill: currentColor; }
 .ak-monogram-amp { font-family: 'Bodoni Moda', 'Times New Roman', serif; font-size: 92px; font-weight: 400; font-style: italic; letter-spacing: -.18em; fill: currentColor; }
@@ -40,7 +40,7 @@ button, input, select, textarea { font: inherit; }
 .envelope-pocket { bottom: -1px; height: 100%; clip-path: polygon(0 100%, 100% 100%, 100% 22%, 50% 62%, 0 22%); z-index: 2; box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
 .envelope-flap { top: 0; height: 58%; display: flex; align-items: flex-start; justify-content: center; padding-top: 10%; clip-path: polygon(0 0, 100% 0, 50% 68%); transform-origin: top center; transform: rotateX(0deg) translateZ(10px); backface-visibility: hidden; transition: transform 1.05s cubic-bezier(.16,1,.3,1); z-index: 3; }
 .envelope-flap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,.06), transparent 50%); }
-.envelope-seal { position: relative; z-index: 1; display: block; width: 106px; height: 72px; color: var(--gold-light); }
+.envelope-seal { position: relative; z-index: 1; display: block; width: 106px; height: 72px; padding: 3px; color: var(--gold-light); background: radial-gradient(circle, rgba(184,146,92,.38), #090705 72%); border-radius: 9px; }
 .envelope-prompt { position: relative; z-index: 10; margin-top: 36px; color: rgba(216,197,169,.8); font-size: .74rem; letter-spacing: .18em; text-align: center; text-transform: uppercase; animation: promptPulse 2.6s ease-in-out infinite; }
 .envelope-overlay.opening .envelope-flap { transform: rotateX(-180deg) translateZ(10px); }
 .envelope-overlay.opening .envelope-card { transform: translateY(-18%) translateZ(5px); box-shadow: 0 22px 42px rgba(25,16,13,.3); }
@@ -58,7 +58,7 @@ button, input, select, textarea { font: inherit; }
 .hero::before { left: -13vw; top: 18%; }
 .hero::after { right: -12vw; bottom: 10%; }
 .hero-inner { text-align: center; max-width: 920px; position: relative; z-index: 1; }
-.hero-seal { width: 180px; height: 120px; margin: 0 auto 12px; display: grid; place-items: center; color: var(--gold); animation: sealIn .9s ease both; }
+.hero-seal { width: 180px; height: 120px; margin: 0 auto 12px; display: grid; place-items: center; padding: 6px; color: var(--gold); background: radial-gradient(circle, rgba(184,146,92,.48), #090705 72%); border-radius: 16px; box-shadow: 0 10px 24px rgba(70,53,46,.18); animation: sealIn .9s ease both; }
 .hero .eyebrow, .hero h1, .hero-date, .hero-note, .hero .button { opacity: 0; animation: heroIn .8s cubic-bezier(.22,.61,.36,1) forwards; }
 .hero .eyebrow { animation-delay: .12s; }
 .hero h1 { animation-delay: .24s; }
