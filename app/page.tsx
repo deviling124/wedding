@@ -28,6 +28,8 @@ export default function HomePage() {
   const [form, setForm] = useState(initialState);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [showEnvelope, setShowEnvelope] = useState(true);
+  const [envelopeOpening, setEnvelopeOpening] = useState(false);
 
   useEffect(() => {
     const reveals = document.querySelectorAll<HTMLElement>(".reveal");
@@ -47,7 +49,25 @@ export default function HomePage() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    if (showEnvelope) document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [showEnvelope]);
+
   const update = (key: keyof FormState, value: string) => setForm((current) => ({ ...current, [key]: value }));
+
+  function openInvitation() {
+    if (envelopeOpening) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setShowEnvelope(false);
+      return;
+    }
+    setEnvelopeOpening(true);
+    window.setTimeout(() => setShowEnvelope(false), 1500);
+  }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -71,6 +91,17 @@ export default function HomePage() {
 
   return (
     <>
+      {showEnvelope && (
+        <button className={`envelope-overlay${envelopeOpening ? " opening" : ""}`} type="button" onClick={openInvitation} aria-label="Open invitation">
+          <span className="envelope-box" aria-hidden="true">
+            <span className="envelope-back" />
+            <span className="envelope-card"><span className="envelope-card-mark">A <i>&amp;</i> K</span></span>
+            <span className="envelope-pocket" />
+            <span className="envelope-flap"><span className="envelope-seal">A <i>&amp;</i> K</span></span>
+          </span>
+          <span className="envelope-prompt">Tap to open your invitation</span>
+        </button>
+      )}
       <nav className="nav" aria-label="Main navigation">
         <a className="brand" href="#top">A <span className="amp">&amp;</span> K</a>
         <div className="nav-links"><a href="#details">Details</a><a href="#rsvp">RSVP</a><a href="#travel">Travel</a></div>
