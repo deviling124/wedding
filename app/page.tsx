@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 type FormState = {
   inviteCode: string;
@@ -28,6 +28,24 @@ export default function HomePage() {
   const [form, setForm] = useState(initialState);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const reveals = document.querySelectorAll<HTMLElement>(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 },
+    );
+
+    reveals.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
 
   const update = (key: keyof FormState, value: string) => setForm((current) => ({ ...current, [key]: value }));
 
@@ -60,6 +78,7 @@ export default function HomePage() {
       <main id="top">
         <section className="hero">
           <div className="hero-inner">
+            <div className="hero-seal" aria-hidden="true">M <span>&amp;</span> T</div>
             <div className="eyebrow">Together with our families</div>
             <h1>Maya <span className="amp">&amp;</span> Theo</h1>
             <div className="hero-date">Saturday, 12 September 2027 &nbsp;·&nbsp; Singapore</div>
@@ -69,15 +88,15 @@ export default function HomePage() {
         </section>
 
         <section className="section paper">
-          <div className="intro">
+          <div className="intro reveal">
             <div className="quote">A little bit of forever starts with <span>you.</span></div>
             <div className="story-copy"><p>From late-night conversations to a life full of ordinary magic, we’re so grateful for every chapter that led us here. Now we’re making it official — with good food, happy tears, and the people we love most.</p><p>Keep scrolling for the details, and let us know if you can join the celebration.</p></div>
           </div>
         </section>
 
         <section className="section mist" id="details">
-          <div className="section-head"><div className="eyebrow">The weekend at a glance</div><h2>Come as you are.</h2><p>One beautiful evening, a long table under the lights, and plenty of time to catch up.</p></div>
-          <div className="facts">
+          <div className="section-head reveal"><div className="eyebrow">The weekend at a glance</div><h2>Come as you are.</h2><p>One beautiful evening, a long table under the lights, and plenty of time to catch up.</p></div>
+          <div className="facts reveal">
             <div className="fact"><div className="label">When</div><strong>12 September 2027</strong><p>Ceremony begins at 4:30 PM</p></div>
             <div className="fact"><div className="label">Where</div><strong>The Glasshouse</strong><p>1 Garden Walk, Singapore</p></div>
             <div className="fact"><div className="label">Dress</div><strong>Garden formal</strong><p>Colour, linen, and dancing shoes encouraged</p></div>
@@ -85,8 +104,8 @@ export default function HomePage() {
         </section>
 
         <section className="section paper">
-          <div className="section-head"><div className="eyebrow">The shape of the day</div><h2>Meet us under the trees.</h2></div>
-          <div className="timeline">
+          <div className="section-head reveal"><div className="eyebrow">The shape of the day</div><h2>Meet us under the trees.</h2></div>
+          <div className="timeline reveal">
             <div className="event"><div className="event-time">4:00 PM</div><div><h3>Arrive &amp; exhale</h3><p>Welcome drinks, a little shade, and time to find your seat.</p></div></div>
             <div className="event"><div className="event-time">4:30 PM</div><div><h3>The ceremony</h3><p>Short, sweet, and hopefully only a little bit teary.</p></div></div>
             <div className="event"><div className="event-time">5:30 PM</div><div><h3>Drinks &amp; dinner</h3><p>Toasts, a long table, and the first of many dance-floor appearances.</p></div></div>
@@ -95,7 +114,7 @@ export default function HomePage() {
         </section>
 
         <section className="section mist" id="rsvp">
-          <div className="rsvp-wrap">
+          <div className="rsvp-wrap reveal">
             <div className="rsvp-intro"><div className="eyebrow">Before we plan the table</div><h2>Will you join us?</h2><p>Please reply by 1 July 2027. Your invitation code is printed on your invitation.</p></div>
             <div className="rsvp-card">
               <form onSubmit={submit}>
@@ -116,8 +135,8 @@ export default function HomePage() {
         </section>
 
         <section className="section paper" id="travel">
-          <div className="section-head"><div className="eyebrow">A few helpful things</div><h2>Make a weekend of it.</h2><p>For friends coming from near and far, here are three easy starting points.</p></div>
-          <div className="travel">
+          <div className="section-head reveal"><div className="eyebrow">A few helpful things</div><h2>Make a weekend of it.</h2><p>For friends coming from near and far, here are three easy starting points.</p></div>
+          <div className="travel reveal">
             <div className="travel-card"><div className="number">01</div><h3>Getting there</h3><p>The Glasshouse is a 15-minute taxi ride from the city centre. Ride-share drop-off is available at the main gate.</p></div>
             <div className="travel-card"><div className="number">02</div><h3>Where to stay</h3><p>We recommend choosing a hotel around Tiong Bahru or Robertson Quay for a relaxed mix of food, coffee, and river walks.</p></div>
             <div className="travel-card"><div className="number">03</div><h3>Questions?</h3><p>Send a note to <a href="mailto:hello@mayaandtheo.example">hello@mayaandtheo.example</a> and we’ll help however we can.</p></div>
