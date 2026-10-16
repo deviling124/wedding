@@ -13,6 +13,22 @@ type FormState = {
   song: string;
 };
 
+type Countdown = { days: number; hours: number; minutes: number; seconds: number; complete: boolean };
+
+const WEDDING_DATE = "2027-01-30T16:30:00+08:00";
+
+function getCountdown(): Countdown {
+  const remaining = Math.max(0, Date.parse(WEDDING_DATE) - Date.now());
+  const totalSeconds = Math.floor(remaining / 1000);
+  return {
+    days: Math.floor(totalSeconds / 86400),
+    hours: Math.floor((totalSeconds % 86400) / 3600),
+    minutes: Math.floor((totalSeconds % 3600) / 60),
+    seconds: totalSeconds % 60,
+    complete: remaining === 0,
+  };
+}
+
 const initialState: FormState = {
   inviteCode: "",
   firstName: "",
@@ -28,12 +44,37 @@ function AKMonogram() {
   return <img className="ak-monogram" src="/monogramAK.png" alt="Adrian and KC floral gold monogram" loading="eager" />;
 }
 
+function DressCodeIllustration() {
+  return (
+    <svg className="dress-illustration-svg" viewBox="0 0 260 260" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M58 62 78 46l18 16-8 14 7 132H42l7-132-8-14Z" />
+      <path d="M78 46v45L58 62M78 91l18-29M65 112h26M65 133h26M65 154h26" />
+      <circle cx="78" cy="120" r="2.2" fill="currentColor" stroke="none" />
+      <circle cx="78" cy="141" r="2.2" fill="currentColor" stroke="none" />
+      <circle cx="78" cy="162" r="2.2" fill="currentColor" stroke="none" />
+      <path className="dress-gold" d="M174 46c-9 0-15 7-15 17 0 10 6 16 6 28-13 19-23 58-28 101h74c-5-43-15-82-28-101 0-12 6-18 6-28 0-10-6-17-15-17Z" />
+      <path className="dress-gold" d="M165 91c5 7 13 7 18 0M137 192c22 5 52 5 74 0" />
+      <path className="dress-line-soft" d="M26 214h208M26 214c7-5 13-8 20-8M234 214c-7-5-13-8-20-8" />
+    </svg>
+  );
+}
+
+function GalleryTile({ number, label, title, tone }: { number: string; label: string; title: string; tone: string }) {
+  return (
+    <article className={`gallery-frame ${tone}`}>
+      <div className="gallery-frame-top"><span>0{number}</span><span className="gallery-glyph" aria-hidden="true">✦</span></div>
+      <div className="gallery-caption"><div>{label}</div><h3>{title}</h3></div>
+    </article>
+  );
+}
+
 export default function HomePage() {
   const [form, setForm] = useState(initialState);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
   const [showEnvelope, setShowEnvelope] = useState(true);
   const [envelopeOpening, setEnvelopeOpening] = useState(false);
+  const [countdown, setCountdown] = useState<Countdown | null>(null);
 
   useEffect(() => {
     const reveals = document.querySelectorAll<HTMLElement>(".reveal");
@@ -60,6 +101,12 @@ export default function HomePage() {
       document.body.style.overflow = previousOverflow;
     };
   }, [showEnvelope]);
+
+  useEffect(() => {
+    setCountdown(getCountdown());
+    const timer = window.setInterval(() => setCountdown(getCountdown()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const update = (key: keyof FormState, value: string) => setForm((current) => ({ ...current, [key]: value }));
 
@@ -108,7 +155,7 @@ export default function HomePage() {
       )}
       <nav className="nav" aria-label="Main navigation">
         <a className="brand" href="#top" aria-label="Adrian and KC home"><span className="brand-monogram"><AKMonogram /></span></a>
-        <div className="nav-links"><a href="#details">Details</a><a href="#rsvp">RSVP</a><a href="#travel">Travel</a></div>
+        <div className="nav-links"><a href="#details">Details</a><a href="#dresscode">Dress code</a><a href="#gallery">Gallery</a><a href="#rsvp">RSVP</a><a href="#travel">Travel</a></div>
       </nav>
       <main id="top">
         <section className="hero">
@@ -116,23 +163,22 @@ export default function HomePage() {
             <div className="hero-seal"><AKMonogram /></div>
             <div className="eyebrow">Together with our families</div>
             <h1>Adrian <span className="amp">&amp;</span> KC</h1>
-            <div className="hero-date">Saturday, 12 September 2027 &nbsp;·&nbsp; Singapore</div>
+            <div className="hero-date">Saturday, January 30, 2027</div>
+            <div className="countdown" aria-live="polite" aria-label="Countdown to the wedding">
+              <div className="countdown-intro">Counting down to our day</div>
+              <div className="countdown-grid">
+                {countdown ? <><div><strong>{countdown.days}</strong><span>Days</span></div><div><strong>{String(countdown.hours).padStart(2, "0")}</strong><span>Hours</span></div><div><strong>{String(countdown.minutes).padStart(2, "0")}</strong><span>Minutes</span></div><div><strong>{String(countdown.seconds).padStart(2, "0")}</strong><span>Seconds</span></div></> : <div className="countdown-loading">Preparing the countdown…</div>}
+              </div>
+            </div>
             <p className="hero-note">We’re getting married, and it would mean the world to have you with us for the weekend.</p>
-            <a className="button" href="#rsvp">Please RSVP <span aria-hidden="true">↗</span></a>
-          </div>
-        </section>
-
-        <section className="section paper">
-          <div className="intro reveal">
-            <div className="quote">A little bit of forever starts with <span>you.</span></div>
-            <div className="story-copy"><p>From late-night conversations to a life full of ordinary magic, we’re so grateful for every chapter that led us here. Now we’re making it official — with good food, happy tears, and the people we love most.</p><p>Keep scrolling for the details, and let us know if you can join the celebration.</p></div>
+            <a className="button" href="#rsvp">Reply to the invitation <span aria-hidden="true">↗</span></a>
           </div>
         </section>
 
         <section className="section mist" id="details">
           <div className="section-head reveal"><div className="eyebrow">The weekend at a glance</div><h2>Come as you are.</h2><p>One beautiful evening, a long table under the lights, and plenty of time to catch up.</p></div>
           <div className="facts reveal">
-            <div className="fact"><div className="label">When</div><strong>12 September 2027</strong><p>Ceremony begins at 4:30 PM</p></div>
+            <div className="fact"><div className="label">When</div><strong>January 30, 2027</strong><p>Ceremony begins at 4:30 PM</p></div>
             <div className="fact"><div className="label">Where</div><strong>The Glasshouse</strong><p>1 Garden Walk, Singapore</p></div>
             <div className="fact"><div className="label">Dress</div><strong>Garden formal</strong><p>Colour, linen, and dancing shoes encouraged</p></div>
           </div>
@@ -145,6 +191,37 @@ export default function HomePage() {
             <div className="event"><div className="event-time">4:30 PM</div><div><h3>The ceremony</h3><p>Short, sweet, and hopefully only a little bit teary.</p></div></div>
             <div className="event"><div className="event-time">5:30 PM</div><div><h3>Drinks &amp; dinner</h3><p>Toasts, a long table, and the first of many dance-floor appearances.</p></div></div>
             <div className="event"><div className="event-time">9:30 PM</div><div><h3>One last song</h3><p>We’ll send you home with something sweet and very full hearts.</p></div></div>
+          </div>
+        </section>
+
+        <section className="section mist" id="dresscode">
+          <div className="section-head reveal"><div className="eyebrow">What to wear</div><h2>Dress with ease.</h2><p>A polished garden-formal look in the warm tones of our day.</p></div>
+          <div className="dress-card reveal">
+            <div className="dress-art"><DressCodeIllustration /></div>
+            <div className="dress-copy">
+              <div className="dress-value">Garden formal</div>
+              <p>Think tailored, romantic, and comfortable enough for dinner, dancing, and a little wandering under the trees.</p>
+              <div className="dress-palette" aria-label="Suggested colour palette">
+                <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#46352e" }} /><span>Espresso</span></div>
+                <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#62473b" }} /><span>Chocolate</span></div>
+                <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#8b7061" }} /><span>Mocha</span></div>
+                <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#b69b89" }} /><span>Cappuccino</span></div>
+                <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#d8c5a9" }} /><span>Champagne</span></div>
+              </div>
+              <div className="dress-notes"><p><strong>For everyone:</strong> Colour, linen, soft tailoring, and dancing shoes encouraged.</p><p><strong>A gentle note:</strong> Please leave white and ivory for the couple.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section paper" id="gallery">
+          <div className="section-head reveal"><div className="eyebrow">A few favorite details</div><h2>Before the big day.</h2><p>A little visual moodboard for the colour, light, and feeling we’re bringing to the weekend.</p></div>
+          <div className="gallery-grid reveal">
+            <GalleryTile number="1" label="The palette" title="Chocolate &amp; champagne" tone="gallery-chocolate" />
+            <GalleryTile number="2" label="The setting" title="Under the trees" tone="gallery-cappuccino" />
+            <GalleryTile number="3" label="The table" title="Long, warm evenings" tone="gallery-mocha" />
+            <GalleryTile number="4" label="The feeling" title="A little bit of forever" tone="gallery-champagne" />
+            <GalleryTile number="5" label="The details" title="Soft light &amp; gold" tone="gallery-espresso" />
+            <GalleryTile number="6" label="The dance floor" title="One last song" tone="gallery-sand" />
           </div>
         </section>
 
