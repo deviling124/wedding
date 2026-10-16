@@ -72,7 +72,7 @@ export default function HomePage() {
   return (
     <>
       <nav className="nav" aria-label="Main navigation">
-        <a className="brand" href="#top">M <span className="amp">&amp;</span> T</a>
+        <a className="brand" href="#top">A <span className="amp">&amp;</span> K</a>
         <div className="nav-links"><a href="#details">Details</a><a href="#rsvp">RSVP</a><a href="#travel">Travel</a></div>
       </nav>
       <main id="top">
