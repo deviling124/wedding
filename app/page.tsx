@@ -24,6 +24,17 @@ const initialState: FormState = {
   song: "",
 };
 
+function AKMonogram() {
+  return (
+    <svg className="ak-monogram" viewBox="0 0 100 100" role="img" aria-label="AK monogram">
+      <circle className="ak-monogram-ring" cx="50" cy="50" r="43" />
+      <text className="ak-monogram-a" x="28" y="68">A</text>
+      <text className="ak-monogram-k" x="48" y="68">K</text>
+      <path className="ak-monogram-line" d="M25 76h50" />
+    </svg>
+  );
+}
+
 export default function HomePage() {
   const [form, setForm] = useState(initialState);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -95,9 +106,9 @@ export default function HomePage() {
         <button className={`envelope-overlay${envelopeOpening ? " opening" : ""}`} type="button" onClick={openInvitation} aria-label="Open invitation">
           <span className="envelope-box" aria-hidden="true">
             <span className="envelope-back" />
-            <span className="envelope-card"><span className="envelope-card-mark">A <i>&amp;</i> K</span></span>
+            <span className="envelope-card"><span className="envelope-card-mark"><AKMonogram /></span></span>
             <span className="envelope-pocket" />
-            <span className="envelope-flap"><span className="envelope-seal">A <i>&amp;</i> K</span></span>
+            <span className="envelope-flap"><span className="envelope-seal"><AKMonogram /></span></span>
           </span>
           <span className="envelope-prompt">Tap to open your invitation</span>
         </button>
@@ -109,7 +120,7 @@ export default function HomePage() {
       <main id="top">
         <section className="hero">
           <div className="hero-inner">
-            <div className="hero-seal" aria-hidden="true">A <span>&amp;</span> K</div>
+            <div className="hero-seal"><AKMonogram /></div>
             <div className="eyebrow">Together with our families</div>
             <h1>Adrian <span className="amp">&amp;</span> KC</h1>
             <div className="hero-date">Saturday, 12 September 2027 &nbsp;·&nbsp; Singapore</div>
