@@ -3,14 +3,26 @@
 import { FormEvent, useEffect, useState } from "react";
 
 type FormState = {
-  inviteCode: string;
-  firstName: string;
-  lastName: string;
-  email: string;
+  fullName: string;
   attendance: "joyfully-accept" | "regretfully-decline" | "";
   guests: string;
-  dietary: string;
-  song: string;
+};
+
+type DressRole = "Primary Sponsor" | "Secondary Sponsor" | "Guest";
+
+const dressGuides: Record<DressRole, { title: string; copy: string }> = {
+  "Primary Sponsor": {
+    title: "Polished formal",
+    copy: "Deep chocolate, espresso, or warm neutrals with a tailored silhouette. A jacket, dress, or elegant set will feel right for the ceremony.",
+  },
+  "Secondary Sponsor": {
+    title: "Soft formal",
+    copy: "Choose refined tailoring, a flowing dress, or a coordinated set in mocha, cappuccino, champagne, or another warm earthy tone.",
+  },
+  Guest: {
+    title: "Garden formal",
+    copy: "Think romantic, comfortable, and polished: colour, linen, soft tailoring, and dancing shoes encouraged.",
+  },
 };
 
 type Countdown = { days: number; hours: number; minutes: number; seconds: number; complete: boolean };
@@ -30,14 +42,9 @@ function getCountdown(): Countdown {
 }
 
 const initialState: FormState = {
-  inviteCode: "",
-  firstName: "",
-  lastName: "",
-  email: "",
+  fullName: "",
   attendance: "",
   guests: "1",
-  dietary: "",
-  song: "",
 };
 
 function AKMonogram() {
@@ -75,6 +82,7 @@ export default function HomePage() {
   const [showEnvelope, setShowEnvelope] = useState(true);
   const [envelopeOpening, setEnvelopeOpening] = useState(false);
   const [countdown, setCountdown] = useState<Countdown | null>(null);
+  const [dressRole, setDressRole] = useState<DressRole>("Guest");
 
   useEffect(() => {
     const reveals = document.querySelectorAll<HTMLElement>(".reveal");
@@ -178,8 +186,9 @@ export default function HomePage() {
         <section className="section mist" id="details">
           <div className="section-head reveal"><div className="eyebrow">The weekend at a glance</div><h2>Come as you are.</h2><p>One beautiful evening, a long table under the lights, and plenty of time to catch up.</p></div>
           <div className="facts reveal">
-            <div className="fact"><div className="label">When</div><strong>January 30, 2027</strong><p>Ceremony begins at 4:30 PM</p></div>
-            <div className="fact"><div className="label">Where</div><strong>The Glasshouse</strong><p>1 Garden Walk, Singapore</p></div>
+            <div className="fact"><div className="label">When</div><strong>January 30, 2027</strong><p>Ceremony begins at 2:00 PM</p></div>
+            <div className="fact"><div className="label">Ceremony</div><strong>Immaculate Conception Parish Church</strong><p>Bauan, Batangas</p></div>
+            <div className="fact"><div className="label">Reception</div><strong>Pramea Grand Pavilion</strong><p>Following the ceremony</p></div>
             <div className="fact"><div className="label">Dress</div><strong>Garden formal</strong><p>Colour, linen, and dancing shoes encouraged</p></div>
           </div>
         </section>
@@ -187,10 +196,10 @@ export default function HomePage() {
         <section className="section paper">
           <div className="section-head reveal"><div className="eyebrow">The shape of the day</div><h2>Meet us under the trees.</h2></div>
           <div className="timeline reveal">
-            <div className="event"><div className="event-time">4:00 PM</div><div><h3>Arrive &amp; exhale</h3><p>Welcome drinks, a little shade, and time to find your seat.</p></div></div>
-            <div className="event"><div className="event-time">4:30 PM</div><div><h3>The ceremony</h3><p>Short, sweet, and hopefully only a little bit teary.</p></div></div>
-            <div className="event"><div className="event-time">5:30 PM</div><div><h3>Drinks &amp; dinner</h3><p>Toasts, a long table, and the first of many dance-floor appearances.</p></div></div>
-            <div className="event"><div className="event-time">9:30 PM</div><div><h3>One last song</h3><p>We’ll send you home with something sweet and very full hearts.</p></div></div>
+            <div className="event"><div className="event-time">1:30 PM</div><div><h3>Arrive &amp; exhale</h3><p>Arrive at Immaculate Conception Parish Church and find your seat before the ceremony.</p></div></div>
+            <div className="event"><div className="event-time">2:00 PM</div><div><h3>The ceremony</h3><p>Short, sweet, and hopefully only a little bit teary.</p></div></div>
+            <div className="event"><div className="event-time">After ceremony</div><div><h3>Celebrate together</h3><p>We’ll continue the celebration at Pramea Grand Pavilion.</p></div></div>
+            <div className="event"><div className="event-time">Evening</div><div><h3>Dinner &amp; dancing</h3><p>Toasts, a long table, and the first of many dance-floor appearances.</p></div></div>
           </div>
         </section>
 
@@ -201,6 +210,18 @@ export default function HomePage() {
             <div className="dress-copy">
               <div className="dress-value">Garden formal</div>
               <p>Think tailored, romantic, and comfortable enough for dinner, dancing, and a little wandering under the trees.</p>
+              <div className="dress-role-options" role="group" aria-label="Dress code by role">
+                {(Object.keys(dressGuides) as DressRole[]).map((role) => (
+                  <button className={`dress-role${dressRole === role ? " selected" : ""}`} type="button" key={role} onClick={() => setDressRole(role)} aria-pressed={dressRole === role}>
+                    {role}
+                  </button>
+                ))}
+              </div>
+              <div className="dress-role-guide" aria-live="polite">
+                <div className="dress-role-label">For {dressRole}</div>
+                <strong>{dressGuides[dressRole].title}</strong>
+                <p>{dressGuides[dressRole].copy}</p>
+              </div>
               <div className="dress-palette" aria-label="Suggested colour palette">
                 <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#46352e" }} /><span>Espresso</span></div>
                 <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#62473b" }} /><span>Chocolate</span></div>
@@ -227,17 +248,12 @@ export default function HomePage() {
 
         <section className="section mist" id="rsvp">
           <div className="rsvp-wrap reveal">
-            <div className="rsvp-intro"><div className="eyebrow">Before we plan the table</div><h2>Will you join us?</h2><p>Please reply by 1 July 2027. Your invitation code is printed on your invitation.</p></div>
+            <div className="rsvp-intro"><div className="eyebrow">Before we plan the table</div><h2>Will you join us?</h2><p>Please reply by 1 July 2027. We’re looking forward to celebrating with you.</p></div>
             <div className="rsvp-card">
               <form onSubmit={submit}>
-                <label>Invitation code<input value={form.inviteCode} onChange={(e) => update("inviteCode", e.target.value)} required placeholder="ADRIAN-KC-01" autoCapitalize="characters" /></label>
-                <div className="two"><label>First name<input value={form.firstName} onChange={(e) => update("firstName", e.target.value)} required autoComplete="given-name" placeholder="Adrian" /></label><label>Last name<input value={form.lastName} onChange={(e) => update("lastName", e.target.value)} required autoComplete="family-name" placeholder="KC" /></label></div>
-                <label>Email address<input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} required autoComplete="email" placeholder="you@example.com" /></label>
+                <label>Full name<input value={form.fullName} onChange={(e) => update("fullName", e.target.value)} required autoComplete="name" placeholder="Adrian Castillo" /></label>
                 <fieldset style={{ border: 0, padding: 0, margin: 0 }}><legend style={{ fontSize: ".78rem", letterSpacing: ".05em", fontWeight: 700 }}>Your reply</legend><div className="radio-row"><label className="radio"><input type="radio" name="attendance" value="joyfully-accept" checked={form.attendance === "joyfully-accept"} onChange={(e) => update("attendance", e.target.value)} required /><span>Joyfully accept</span></label><label className="radio"><input type="radio" name="attendance" value="regretfully-decline" checked={form.attendance === "regretfully-decline"} onChange={(e) => update("attendance", e.target.value)} /><span>Regretfully decline</span></label></div></fieldset>
                 <label>Number of guests<select value={form.guests} onChange={(e) => update("guests", e.target.value)}><option value="1">1 guest</option><option value="2">2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option></select></label>
-                <label>Dietary notes <span style={{ fontWeight: 400, color: "var(--muted)" }}>(optional)</span><textarea value={form.dietary} onChange={(e) => update("dietary", e.target.value)} placeholder="Vegetarian, allergies, or anything we should know" /></label>
-                <label>Song request <span style={{ fontWeight: 400, color: "var(--muted)" }}>(optional)</span><input value={form.song} onChange={(e) => update("song", e.target.value)} placeholder="The one that gets you dancing" /></label>
-                <p className="form-note">Your invitation code keeps the RSVP private and helps us match your reply to the right household.</p>
                 {status === "error" && <div className="error" role="alert">{message}</div>}
                 <button className="button" type="submit" disabled={status === "submitting"}>{status === "submitting" ? "Saving RSVP…" : "Send RSVP →"}</button>
                 {status === "success" && <div className="success show" role="status">{message}</div>}
@@ -249,8 +265,8 @@ export default function HomePage() {
         <section className="section paper" id="travel">
           <div className="section-head reveal"><div className="eyebrow">A few helpful things</div><h2>Make a weekend of it.</h2><p>For friends coming from near and far, here are three easy starting points.</p></div>
           <div className="travel reveal">
-            <div className="travel-card"><div className="number">01</div><h3>Getting there</h3><p>The Glasshouse is a 15-minute taxi ride from the city centre. Ride-share drop-off is available at the main gate.</p></div>
-            <div className="travel-card"><div className="number">02</div><h3>Where to stay</h3><p>We recommend choosing a hotel around Tiong Bahru or Robertson Quay for a relaxed mix of food, coffee, and river walks.</p></div>
+            <div className="travel-card"><div className="number">01</div><h3>Getting there</h3><p>Please arrive at Immaculate Conception Parish Church before 2:00 PM. The reception follows at Pramea Grand Pavilion.</p></div>
+            <div className="travel-card"><div className="number">02</div><h3>Where to stay</h3><p>For guests traveling in, we’ll share nearby accommodation suggestions for Bauan and Batangas soon.</p></div>
             <div className="travel-card"><div className="number">03</div><h3>Questions?</h3><p>Send a note to <a href="mailto:hello@adrianandkc.example">hello@adrianandkc.example</a> and we’ll help however we can.</p></div>
           </div>
         </section>
@@ -259,3 +275,4 @@ export default function HomePage() {
     </>
   );
 }
+

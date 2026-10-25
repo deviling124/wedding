@@ -99,7 +99,7 @@ h1 { font-size: clamp(4.2rem, 13vw, 10rem); font-style: italic; letter-spacing: 
 .quote { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.08; letter-spacing: -.04em; }
 .quote span { color: var(--coral); }
 .story-copy { color: var(--muted); max-width: 480px; }
-.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); max-width: 1120px; margin: auto; }
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); max-width: 1120px; margin: auto; }
 .fact { padding: 30px; background: var(--paper); }
 .fact .label { font-size: .72rem; text-transform: uppercase; letter-spacing: .16em; color: var(--deep-sage); font-weight: 700; }
 .fact strong { display: block; font-family: var(--serif); font-size: 1.55rem; font-weight: 400; margin-top: 10px; }
@@ -121,6 +121,14 @@ h1 { font-size: clamp(4.2rem, 13vw, 10rem); font-style: italic; letter-spacing: 
 .dress-copy { padding: 12px 4px; }
 .dress-value { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem); font-style: italic; letter-spacing: -.04em; }
 .dress-copy > p { max-width: 600px; margin: 14px 0 0; color: var(--muted); }
+.dress-role-options { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+.dress-role { border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; background: transparent; color: var(--muted); font-size: .72rem; font-weight: 600; letter-spacing: .06em; cursor: pointer; transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease; }
+.dress-role:hover { transform: translateY(-1px); border-color: var(--deep-sage); color: var(--deep-sage); }
+.dress-role.selected { border-color: var(--deep-sage); background: var(--deep-sage); color: var(--paper); }
+.dress-role-guide { margin-top: 14px; padding: 16px 18px; border-left: 2px solid var(--gold); background: rgba(216,197,169,.2); }
+.dress-role-label { color: var(--deep-sage); font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.dress-role-guide strong { display: block; margin-top: 5px; font-family: var(--serif); font-size: 1.25rem; font-weight: 400; }
+.dress-role-guide p { margin: 5px 0 0; color: var(--muted); font-size: .9rem; }
 .dress-palette { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 28px; }
 .dress-swatch { display: grid; justify-items: center; gap: 7px; color: var(--muted); font-size: .72rem; letter-spacing: .05em; }
 .dress-swatch-dot { display: block; width: 36px; height: 36px; border: 1px solid rgba(70,53,46,.22); border-radius: 50%; box-shadow: 0 3px 10px rgba(70,53,46,.12); }
@@ -210,3 +218,4 @@ footer p { opacity: .7; margin: 12px 0 0; }
   .reveal { transition: none; opacity: 1; transform: none; }
   .travel-card { transition: none; }
 }
+
