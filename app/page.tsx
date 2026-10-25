@@ -28,6 +28,8 @@ const dressGuides: Record<DressRole, { title: string; copy: string }> = {
 type Countdown = { days: number; hours: number; minutes: number; seconds: number; complete: boolean };
 
 const WEDDING_DATE = "2027-01-30T16:30:00+08:00";
+const CEREMONY_MAP_URL = "https://www.google.com/maps/search/?api=1&query=Immaculate+Conception+Parish+Church%2C+Bauan%2C+Batangas";
+const RECEPTION_MAP_URL = "https://www.google.com/maps/search/?api=1&query=Pramea+Grand+Pavilion%2C+Bauan%2C+Batangas";
 
 function getCountdown(): Countdown {
   const remaining = Math.max(0, Date.parse(WEDDING_DATE) - Date.now());
@@ -163,7 +165,7 @@ export default function HomePage() {
       )}
       <nav className="nav" aria-label="Main navigation">
         <a className="brand" href="#top" aria-label="Adrian and KC home"><span className="brand-monogram"><AKMonogram /></span></a>
-        <div className="nav-links"><a href="#details">Details</a><a href="#dresscode">Dress code</a><a href="#gallery">Gallery</a><a href="#rsvp">RSVP</a><a href="#travel">Travel</a></div>
+        <div className="nav-links"><a href="#details">Details</a><a href="#locations">Map</a><a href="#dresscode">Dress code</a><a href="#gallery">Gallery</a><a href="#rsvp">RSVP</a><a href="#travel">Travel</a></div>
       </nav>
       <main id="top">
         <section className="hero">
@@ -187,8 +189,8 @@ export default function HomePage() {
           <div className="section-head reveal"><div className="eyebrow">The weekend at a glance</div><h2>Come as you are.</h2><p>One beautiful evening, a long table under the lights, and plenty of time to catch up.</p></div>
           <div className="facts reveal">
             <div className="fact"><div className="label">When</div><strong>January 30, 2027</strong><p>Ceremony begins at 2:00 PM</p></div>
-            <div className="fact"><div className="label">Ceremony</div><strong>Immaculate Conception Parish Church</strong><p>Bauan, Batangas</p></div>
-            <div className="fact"><div className="label">Reception</div><strong>Pramea Grand Pavilion</strong><p>Following the ceremony</p></div>
+            <div className="fact"><div className="label">Ceremony</div><strong>Immaculate Conception Parish Church</strong><p>Bauan, Batangas · <a className="text-link" href={CEREMONY_MAP_URL} target="_blank" rel="noreferrer">Map ↗</a></p></div>
+            <div className="fact"><div className="label">Reception</div><strong>Pramea Grand Pavilion</strong><p>Following the ceremony · <a className="text-link" href={RECEPTION_MAP_URL} target="_blank" rel="noreferrer">Map ↗</a></p></div>
             <div className="fact"><div className="label">Dress</div><strong>Garden formal</strong><p>Colour, linen, and dancing shoes encouraged</p></div>
           </div>
         </section>
@@ -200,6 +202,26 @@ export default function HomePage() {
             <div className="event"><div className="event-time">2:00 PM</div><div><h3>The ceremony</h3><p>Short, sweet, and hopefully only a little bit teary.</p></div></div>
             <div className="event"><div className="event-time">After ceremony</div><div><h3>Celebrate together</h3><p>We’ll continue the celebration at Pramea Grand Pavilion.</p></div></div>
             <div className="event"><div className="event-time">Evening</div><div><h3>Dinner &amp; dancing</h3><p>Toasts, a long table, and the first of many dance-floor appearances.</p></div></div>
+          </div>
+        </section>
+
+        <section className="section paper" id="locations">
+          <div className="section-head reveal"><div className="eyebrow">Find your way</div><h2>Meet us here.</h2><p>Save these two locations for the day. Each link opens directions in Google Maps.</p></div>
+          <div className="location-grid reveal">
+            <article className="location-card">
+              <div className="location-number">01</div>
+              <div className="eyebrow">Ceremony · 2:00 PM</div>
+              <h3>Immaculate Conception Parish Church</h3>
+              <p>Bauan, Batangas</p>
+              <a className="button secondary" href={CEREMONY_MAP_URL} target="_blank" rel="noreferrer">Open in Google Maps <span aria-hidden="true">↗</span></a>
+            </article>
+            <article className="location-card">
+              <div className="location-number">02</div>
+              <div className="eyebrow">Reception · After the ceremony</div>
+              <h3>Pramea Grand Pavilion</h3>
+              <p>Bauan, Batangas</p>
+              <a className="button secondary" href={RECEPTION_MAP_URL} target="_blank" rel="noreferrer">Open in Google Maps <span aria-hidden="true">↗</span></a>
+            </article>
           </div>
         </section>
 

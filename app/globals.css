@@ -51,7 +51,8 @@ button, input, select, textarea { font: inherit; }
 .nav { position: fixed; z-index: 10; inset: 0 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 18px 5vw; background: rgba(251,245,236,.84); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(209,189,168,.65); }
 .brand { display: inline-flex; align-items: center; text-decoration: none; }
 .brand-monogram { display: block; width: 74px; height: 48px; padding: 2px; background: transparent; border-radius: 8px; }
-.nav-links { display: flex; gap: 24px; font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.nav-links { display: flex; gap: 24px; overflow-x: auto; font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); scrollbar-width: none; }
+.nav-links::-webkit-scrollbar { display: none; }
 .nav-links a { text-decoration: none; }
 .nav-links a:hover { color: var(--coral); }
 .hero { min-height: 93vh; padding: 150px 8vw 80px; display: grid; place-items: center; position: relative; overflow: hidden; background: radial-gradient(circle at 15% 18%, #fff8ec 0, transparent 33%), linear-gradient(135deg, #f1e3d3 0%, #d8c5a9 100%); }
@@ -104,12 +105,22 @@ h1 { font-size: clamp(4.2rem, 13vw, 10rem); font-style: italic; letter-spacing: 
 .fact .label { font-size: .72rem; text-transform: uppercase; letter-spacing: .16em; color: var(--deep-sage); font-weight: 700; }
 .fact strong { display: block; font-family: var(--serif); font-size: 1.55rem; font-weight: 400; margin-top: 10px; }
 .fact p { color: var(--muted); margin: 8px 0 0; font-size: .92rem; }
+.text-link { color: var(--deep-sage); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .timeline { max-width: 780px; margin: auto; display: grid; }
 .event { display: grid; grid-template-columns: 150px 1fr; gap: 30px; border-top: 1px solid var(--line); padding: 25px 0; }
 .event:last-child { border-bottom: 1px solid var(--line); }
 .event-time { color: var(--coral); font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .event h3 { font-size: 1.75rem; margin-bottom: 4px; }
 .event p { color: var(--muted); margin: 0; }
+.location-grid { max-width: 1120px; margin: auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.location-card { position: relative; min-height: 300px; padding: 32px; overflow: hidden; background: linear-gradient(145deg, #eadfd3 0%, #d8c5a9 100%); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.location-card::after { content: ''; position: absolute; width: 220px; height: 220px; right: -100px; bottom: -108px; border: 1px solid rgba(98,71,59,.22); border-radius: 50%; }
+.location-number { position: relative; z-index: 1; color: var(--coral); font-family: var(--serif); font-size: 2rem; }
+.location-card .eyebrow, .location-card h3, .location-card p, .location-card .button { position: relative; z-index: 1; }
+.location-card .eyebrow { margin-top: 38px; font-size: .68rem; }
+.location-card h3 { max-width: 380px; margin-top: 12px; font-size: clamp(1.7rem, 3vw, 2.45rem); }
+.location-card p { color: var(--muted); margin: 12px 0 25px; }
+.location-card .button { width: fit-content; }
 .dress-card { max-width: 1120px; margin: auto; display: grid; grid-template-columns: minmax(220px, .62fr) 1.38fr; gap: clamp(28px, 5vw, 64px); align-items: stretch; padding: clamp(24px, 4vw, 44px); background: var(--paper); border: 1px solid var(--line); box-shadow: var(--shadow); }
 .dress-art { position: relative; display: grid; place-items: center; min-height: 320px; overflow: hidden; background: linear-gradient(145deg, #f8eee2 0%, #eadfd3 55%, #d8c5a9 100%); border: 1px solid rgba(98,71,59,.16); }
 .dress-art::before, .dress-art::after { content: ''; position: absolute; border: 1px solid rgba(98,71,59,.22); border-radius: 50%; pointer-events: none; }
@@ -201,6 +212,7 @@ footer p { opacity: .7; margin: 12px 0 0; }
   .dress-card { grid-template-columns: 1fr; }
   .dress-copy { padding: 0; }
   .facts, .travel { grid-template-columns: 1fr; }
+  .location-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .gallery-frame { min-height: 210px; padding: 15px; }
   .gallery-caption { left: 15px; right: 15px; bottom: 15px; }
