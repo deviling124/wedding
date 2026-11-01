@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 490" fill="none" stroke="#967957" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <g id="leaf">
+      <path fill="#e9e5d7" d="M0 0C-20-3-37-24-37-43-18-37-3-20 0 0Z"/>
+      <path d="M0 0Q-20-21-34-39m17 20-11-3m6-4-1-9"/>
+    </g>
+    <g id="rose" fill="#faf1e8">
+      <path d="M-34 4C-49-6-46-24-30-27-30-44-12-48 1-40 15-50 32-39 33-28 52-23 52-6 43 7 49 25 31 37 18 35 8 49-10 45-20 36-37 37-46 21-34 4Z"/>
+      <path d="M-30-25C-16-36 0-31 8-19m-42 24c-4-15 7-28 22-29m-8 61c-13-12-17-28-8-37m46 34c-15 4-33-4-40-17m64-8c-1 13-12 22-26 23m15-58c9 12 8 25-2 36"/>
+      <path d="M-25-8c-1-15 15-24 27-18 14-4 27 6 26 19 10 12 1 24-11 28-7 13-24 11-32 1-14-1-19-20-10-30Z"/>
+      <path d="M-24-8C-13-16-3-13 4-7m-18 29C-22 8-18-2-9-7m26 28C4 21-5 16-8 9m36-16c2 11-6 21-15 23M2-26c13 2 18 12 16 20"/>
+      <path d="M-11-6c2-8 11-11 17-6 10 0 13 9 7 15-1 9-12 12-18 6-8-1-10-10-6-15Z"/>
+      <path d="M-7-3c3-4 9-5 13-1 3 4-1 8-5 7L-2 0"/>
+    </g>
+  </defs>
+  <path d="M34 485C63 405 111 341 114 274S93 154 158 61M62 424C43 367 56 305 26 253m71 89c45-25 80-49 105-92m-88 24c-37-35-44-66-54-96m53 52c46-22 77-62 93-111m-83 53c-19-23-27-48-28-82"/>
+  <use href="#leaf" transform="translate(49 370) rotate(-7)"/><use href="#leaf" transform="translate(49 332) rotate(73) scale(.75)"/>
+  <use href="#leaf" transform="translate(40 295) rotate(6) scale(.82)"/><use href="#leaf" transform="translate(107 299) rotate(70)"/>
+  <use href="#leaf" transform="translate(154 309) rotate(103) scale(.85)"/><use href="#leaf" transform="translate(175 290) rotate(44) scale(.72)"/>
+  <use href="#leaf" transform="translate(90 242) rotate(-24)"/><use href="#leaf" transform="translate(71 208) rotate(30) scale(.8)"/>
+  <use href="#leaf" transform="translate(157 201) rotate(103)"/><use href="#leaf" transform="translate(179 177) rotate(24) scale(.74)"/>
+  <use href="#leaf" transform="translate(100 124) rotate(8) scale(.65)"/><use href="#leaf" transform="translate(131 108) rotate(61) scale(.8)"/>
+  <use href="#rose" transform="translate(116 266) rotate(-14) scale(.97)"/><use href="#rose" transform="translate(201 246) rotate(23) scale(.58)"/>
+  <use href="#rose" transform="translate(157 59) rotate(18) scale(.65)"/>
+  <path fill="#ecdfd3" d="M205 121c-8-3-10-9-8-16 3 0 6 2 8 5 0-8 4-15 8-17 6 8 6 18-1 25 5-5 9-5 12-4-3 8-10 12-19 7Z"/>
+</svg>

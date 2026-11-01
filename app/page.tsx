@@ -1,12 +1,8 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
-
-type FormState = {
-  fullName: string;
-  attendance: "joyfully-accept" | "regretfully-decline" | "";
-  guests: string;
-};
+import { useEffect, useRef, useState } from "react";
+import InvitationNav from "./InvitationNav";
+import ReplyForm from "./ReplyForm";
 
 type DressRole = "Primary Sponsor" | "Secondary Sponsor" | "Guest";
 
@@ -25,7 +21,7 @@ const dressGuides: Record<DressRole, { title: string; copy: string }> = {
   },
 };
 
-type Countdown = { days: number; hours: number; minutes: number; seconds: number; complete: boolean };
+type Countdown = { days: number; hours: number; minutes: number; seconds: number };
 
 const WEDDING_DATE = "2027-01-30T16:30:00+08:00";
 const CEREMONY_MAP_URL = "https://www.google.com/maps/search/?api=1&query=Immaculate+Conception+Parish+Church%2C+Bauan%2C+Batangas";
@@ -39,18 +35,11 @@ function getCountdown(): Countdown {
     hours: Math.floor((totalSeconds % 86400) / 3600),
     minutes: Math.floor((totalSeconds % 3600) / 60),
     seconds: totalSeconds % 60,
-    complete: remaining === 0,
   };
 }
 
-const initialState: FormState = {
-  fullName: "",
-  attendance: "",
-  guests: "1",
-};
-
 function AKMonogram() {
-  return <img className="ak-monogram" src="/monogramAK.png" alt="Adrian and KC floral gold monogram" loading="eager" />;
+  return <img className="ak-monogram" src="/monogram.webp" width="360" height="240" alt="Adrian and KC floral gold monogram" loading="eager" />;
 }
 
 function DressCodeIllustration() {
@@ -77,17 +66,37 @@ function GalleryTile({ number, label, title, tone }: { number: string; label: st
   );
 }
 
+function WeddingCountdown() {
+  const [countdown, setCountdown] = useState<Countdown | null>(null);
+  useEffect(() => {
+    setCountdown(getCountdown());
+    const timer = window.setInterval(() => setCountdown(getCountdown()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
+  return (
+    <div className="countdown" role="timer" aria-live="off" aria-label="Countdown to the wedding">
+      <div className="countdown-intro">Counting down to our day</div>
+      <div className="countdown-grid">
+        {countdown ? (["days", "hours", "minutes", "seconds"] as const).map(unit => (
+          <div key={unit}>
+            <strong>{unit === "days" ? countdown.days : String(countdown[unit]).padStart(2, "0")}</strong>
+            <span>{unit}</span>
+          </div>
+        )) : <div className="countdown-loading">Preparing the countdown…</div>}
+      </div>
+    </div>
+  );
+}
+
 export default function HomePage() {
-  const [form, setForm] = useState(initialState);
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
   const [showEnvelope, setShowEnvelope] = useState(true);
   const [envelopeOpening, setEnvelopeOpening] = useState(false);
-  const [countdown, setCountdown] = useState<Countdown | null>(null);
+  const heroTitle = useRef<HTMLHeadingElement>(null);
   const [dressRole, setDressRole] = useState<DressRole>("Guest");
 
   useEffect(() => {
     const reveals = document.querySelectorAll<HTMLElement>(".reveal");
+    if (!("IntersectionObserver" in window)) return;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -97,7 +106,7 @@ export default function HomePage() {
           }
         });
       },
-      { threshold: 0.12 },
+      { threshold: 0.01 },
     );
 
     reveals.forEach((element) => observer.observe(element));
@@ -113,13 +122,12 @@ export default function HomePage() {
   }, [showEnvelope]);
 
   useEffect(() => {
-    setCountdown(getCountdown());
-    const timer = window.setInterval(() => setCountdown(getCountdown()), 1000);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  const update = (key: keyof FormState, value: string) => setForm((current) => ({ ...current, [key]: value }));
-
+    if (!showEnvelope) {
+      const destination = document.getElementById(window.location.hash.slice(1));
+      (destination || heroTitle.current)?.focus({ preventScroll: true });
+      destination?.scrollIntoView({ behavior: "instant" });
+    }
+  }, [showEnvelope]);
   function openInvitation() {
     if (envelopeOpening) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -130,30 +138,13 @@ export default function HomePage() {
     window.setTimeout(() => setShowEnvelope(false), 1500);
   }
 
-  async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setStatus("submitting");
-    setMessage("");
-    try {
-      const response = await fetch("/api/rsvp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, guestCount: Number(form.guests) }),
-      });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error ?? "We could not save your RSVP.");
-      setStatus("success");
-      setMessage("Thank you — your reply is tucked safely into our hearts. We’ll be in touch soon.");
-    } catch (error) {
-      setStatus("error");
-      setMessage(error instanceof Error ? error.message : "We could not save your RSVP.");
-    }
-  }
-
   return (
     <>
       {showEnvelope && (
-        <button className={`envelope-overlay${envelopeOpening ? " opening" : ""}`} type="button" onClick={openInvitation} aria-label="Open invitation">
+        <button className={`envelope-overlay${envelopeOpening ? " opening" : ""}`} type="button" autoFocus onClick={openInvitation} aria-label="Open invitation to the wedding of Adrian and KC">
+          <span className="cover-kicker">The wedding invitation</span>
+          <span className="cover-names">Adrian <i>&amp;</i> KC</span>
+          <span className="cover-date">Saturday, January 30, 2027</span>
           <span className="envelope-box" aria-hidden="true">
             <span className="envelope-back" />
             <span className="envelope-card"><span className="envelope-card-mark"><AKMonogram /></span></span>
@@ -163,29 +154,26 @@ export default function HomePage() {
           <span className="envelope-prompt">Tap to open your invitation</span>
         </button>
       )}
-      <nav className="nav" aria-label="Main navigation">
-        <a className="brand" href="#top" aria-label="Adrian and KC home"><span className="brand-monogram"><AKMonogram /></span></a>
-        <div className="nav-links"><a href="#details">Details</a><a href="#locations">Map</a><a href="#dresscode">Dress code</a><a href="#gallery">Gallery</a><a href="#rsvp">RSVP</a><a href="#travel">Travel</a></div>
-      </nav>
-      <main id="top">
-        <section className="hero">
+      <div className="invitation" inert={showEnvelope}>
+      <a className="skip-link" href="#top">Skip to invitation</a>
+      <InvitationNav />
+      <main id="top" tabIndex={-1}>
+        <section className={'hero' + (showEnvelope ? '' : ' is-open')} aria-labelledby="names">
+          <div className="hero-botanicals" aria-hidden="true" />
           <div className="hero-inner">
             <div className="hero-seal"><AKMonogram /></div>
-            <div className="eyebrow">Together with our families</div>
-            <h1>Adrian <span className="amp">&amp;</span> KC</h1>
-            <div className="hero-date">Saturday, January 30, 2027</div>
-            <div className="countdown" aria-live="polite" aria-label="Countdown to the wedding">
-              <div className="countdown-intro">Counting down to our day</div>
-              <div className="countdown-grid">
-                {countdown ? <><div><strong>{countdown.days}</strong><span>Days</span></div><div><strong>{String(countdown.hours).padStart(2, "0")}</strong><span>Hours</span></div><div><strong>{String(countdown.minutes).padStart(2, "0")}</strong><span>Minutes</span></div><div><strong>{String(countdown.seconds).padStart(2, "0")}</strong><span>Seconds</span></div></> : <div className="countdown-loading">Preparing the countdown…</div>}
-              </div>
+            <div className="eyebrow ruled">Together with our families</div>
+            <h1 id="names" tabIndex={-1} ref={heroTitle}>Adrian <span className="amp">&amp;</span> KC</h1>
+            <div className="hero-details">
+              <time className="hero-date" dateTime="2027-01-30">Saturday, January 30, 2027</time>
+              <a className="hero-venue" href="#locations">Immaculate Conception Parish Church<br />Bauan, Batangas · 2:00 PM</a>
             </div>
             <p className="hero-note">We’re getting married, and it would mean the world to have you with us for the weekend.</p>
-            <a className="button" href="#rsvp">Reply to the invitation <span aria-hidden="true">↗</span></a>
+            <a className="button" href="#rsvp">Reply to the invitation <span aria-hidden="true">→</span></a>
           </div>
         </section>
-
-        <section className="section mist" id="details">
+        <WeddingCountdown />
+        <section className="section mist" id="details" tabIndex={-1}>
           <div className="section-head reveal"><div className="eyebrow">The weekend at a glance</div><h2>Come as you are.</h2><p>One beautiful evening, a long table under the lights, and plenty of time to catch up.</p></div>
           <div className="facts reveal">
             <div className="fact"><div className="label">When</div><strong>January 30, 2027</strong><p>Ceremony begins at 2:00 PM</p></div>
@@ -205,7 +193,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="section paper" id="locations">
+        <section className="section paper" id="locations" tabIndex={-1}>
           <div className="section-head reveal"><div className="eyebrow">Find your way</div><h2>Meet us here.</h2><p>Save these two locations for the day. Each link opens directions in Google Maps.</p></div>
           <div className="location-grid reveal">
             <article className="location-card">
@@ -225,7 +213,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="section mist" id="dresscode">
+        <section className="section mist" id="dresscode" tabIndex={-1}>
           <div className="section-head reveal"><div className="eyebrow">What to wear</div><h2>Dress with ease.</h2><p>A polished garden-formal look in the warm tones of our day.</p></div>
           <div className="dress-card reveal">
             <div className="dress-art"><DressCodeIllustration /></div>
@@ -256,7 +244,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="section paper" id="gallery">
+        <section className="section paper" id="gallery" tabIndex={-1}>
           <div className="section-head reveal"><div className="eyebrow">A few favorite details</div><h2>Before the big day.</h2><p>A little visual moodboard for the colour, light, and feeling we’re bringing to the weekend.</p></div>
           <div className="gallery-grid reveal">
             <GalleryTile number="1" label="The palette" title="Chocolate &amp; champagne" tone="gallery-chocolate" />
@@ -268,23 +256,16 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="section mist" id="rsvp">
+        <section className="section mist" id="rsvp" tabIndex={-1}>
           <div className="rsvp-wrap reveal">
             <div className="rsvp-intro"><div className="eyebrow">Before we plan the table</div><h2>Will you join us?</h2><p>Please reply by 1 July 2027. We’re looking forward to celebrating with you.</p></div>
             <div className="rsvp-card">
-              <form onSubmit={submit}>
-                <label>Full name<input value={form.fullName} onChange={(e) => update("fullName", e.target.value)} required autoComplete="name" placeholder="Adrian Castillo" /></label>
-                <fieldset style={{ border: 0, padding: 0, margin: 0 }}><legend style={{ fontSize: ".78rem", letterSpacing: ".05em", fontWeight: 700 }}>Your reply</legend><div className="radio-row"><label className="radio"><input type="radio" name="attendance" value="joyfully-accept" checked={form.attendance === "joyfully-accept"} onChange={(e) => update("attendance", e.target.value)} required /><span>Joyfully accept</span></label><label className="radio"><input type="radio" name="attendance" value="regretfully-decline" checked={form.attendance === "regretfully-decline"} onChange={(e) => update("attendance", e.target.value)} /><span>Regretfully decline</span></label></div></fieldset>
-                <label>Number of guests<select value={form.guests} onChange={(e) => update("guests", e.target.value)}><option value="1">1 guest</option><option value="2">2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option></select></label>
-                {status === "error" && <div className="error" role="alert">{message}</div>}
-                <button className="button" type="submit" disabled={status === "submitting"}>{status === "submitting" ? "Saving RSVP…" : "Send RSVP →"}</button>
-                {status === "success" && <div className="success show" role="status">{message}</div>}
-              </form>
+              <ReplyForm />
             </div>
           </div>
         </section>
 
-        <section className="section paper" id="travel">
+        <section className="section paper" id="travel" tabIndex={-1}>
           <div className="section-head reveal"><div className="eyebrow">A few helpful things</div><h2>Make a weekend of it.</h2><p>For friends coming from near and far, here are three easy starting points.</p></div>
           <div className="travel reveal">
             <div className="travel-card"><div className="number">01</div><h3>Getting there</h3><p>Please arrive at Immaculate Conception Parish Church before 2:00 PM. The reception follows at Pramea Grand Pavilion.</p></div>
@@ -294,7 +275,7 @@ export default function HomePage() {
         </section>
       </main>
       <footer><h2>See you there.</h2><p>With love, Adrian &amp; KC</p></footer>
+      </div>
     </>
   );
 }
-
