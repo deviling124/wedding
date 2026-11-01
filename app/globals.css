@@ -109,6 +109,7 @@ h1 { font-size: clamp(4.2rem, 13vw, 10rem); font-style: italic; letter-spacing: 
 .dress-art::before, .dress-art::after { content: ''; position: absolute; border: 1px solid rgba(98,71,59,.22); border-radius: 50%; pointer-events: none; }
 .dress-art::before { width: 290px; height: 290px; top: -105px; right: -120px; }
 .dress-art::after { width: 210px; height: 210px; bottom: -120px; left: -90px; }
+.dress-placeholder-image { position: relative; z-index: 1; display: block; width: 100%; height: 100%; min-height: 320px; object-fit: cover; object-position: center; filter: sepia(.12) saturate(.78) contrast(.94); animation: dress-image-in .35s ease-out; }
 .dress-illustration-svg { position: relative; z-index: 1; width: min(100%, 290px); color: var(--deep-sage); }
 .dress-gold { color: var(--gold); stroke: currentColor; }
 .dress-line-soft { color: var(--coral); stroke: currentColor; }
@@ -238,7 +239,7 @@ footer p { opacity: .7; margin: 12px 0 0; }
   position: relative; color: var(--deep-sage); font-size: .74rem; font-weight: 600;
   letter-spacing: .17em; text-transform: uppercase;
 }
-.cover-names { font: 400 clamp(2.6rem, 12vw, 6.8rem)/1.16 var(--script); letter-spacing: 0; margin: 12px 0; }
+.cover-names { font: 400 clamp(3.25rem, 16vw, 8.5rem)/1.16 var(--script); letter-spacing: 0; margin: 12px 0; }
 .cover-names i, .brand-name i, .amp { color: #946c52; font-weight: 400; }
 .envelope-box { width: min(53vw, 280px, 36svh); flex-shrink: 0; margin-top: clamp(34px, 7vh, 70px); animation: none; }
 .envelope-prompt { animation: none; margin-top: 28px; padding: 12px 18px; border-bottom: 1px solid #b29776; }
@@ -265,7 +266,7 @@ html { scroll-padding-top: 84px; }
 .hero-seal { width: 105px; height: 70px; margin: 0 auto 14px; }
 .ruled { display: flex; justify-content: center; align-items: center; gap: 13px; }
 .ruled::before, .ruled::after { content: ''; width: 36px; height: 1px; background: #b29a7b; }
-.hero h1 { font: 400 clamp(3.9rem, 9vw, 8.3rem)/1.12 var(--script); letter-spacing: 0; margin: 14px 0 18px; }
+.hero h1 { font: 400 clamp(4.9rem, 11.25vw, 10.25rem)/1.12 var(--script); letter-spacing: 0; margin: 14px 0 18px; }
 .cover-names i, .hero .amp { font: inherit; }
 .hero h1:focus, .reply-receipt h3:focus { outline: none; }
 .amp { font-size: .83em; }
@@ -312,6 +313,7 @@ html { scroll-padding-top: 84px; }
 .reply-receipt h3 { font-size: clamp(2rem, 4vw, 3rem); margin: 15px 0; }
 .receipt-signature, .invitation footer p { font: 400 1.85rem/1.35 var(--script); }
 @keyframes arrive { from { opacity: 0; transform: translateY(9px); } }
+@keyframes dress-image-in { from { opacity: .35; transform: scale(1.02); } to { opacity: 1; transform: scale(1); } }
 @media (prefers-reduced-motion: no-preference) {
   .hero.is-open :is(h1, .hero-details, .hero-note, .button) { animation: arrive .65s cubic-bezier(.2,.65,.3,1) backwards; }
   .hero.is-open .hero-details { animation-delay: .08s; }
@@ -347,7 +349,7 @@ html { scroll-padding-top: 84px; }
   .hero .eyebrow { font-size: .64rem; letter-spacing: .14em; }
   .ruled { gap: 8px; }
   .ruled::before, .ruled::after { width: 18px; }
-  .hero h1 { font-size: clamp(2.45rem, 12.8vw, 5.6rem); }
+  .hero h1 { font-size: clamp(3.1rem, 16.5vw, 6.8rem); }
   .hero-note { font-size: .94rem; }
   .countdown { flex-direction: column; gap: 13px; padding: 20px 7%; }
 }
