@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'Pinyon Script';
-  src: url('/fonts/pinyon-script-latin-400-normal.woff2') format('woff2');
+  font-family: 'Corinthia';
+  src: url('/fonts/corinthia-latin-400-normal.woff2') format('woff2');
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -32,7 +32,7 @@
   --line: #d1bda8;
   --shadow: 0 12px 35px rgba(70, 53, 46, .07);
   --serif: Georgia, 'Times New Roman', serif;
-  --script: 'Pinyon Script', 'Snell Roundhand', 'URW Chancery L', cursive;
+  --script: 'Corinthia', 'Snell Roundhand', 'URW Chancery L', cursive;
   --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 * { box-sizing: border-box; }
@@ -266,7 +266,7 @@ html { scroll-padding-top: 84px; }
 .ruled { display: flex; justify-content: center; align-items: center; gap: 13px; }
 .ruled::before, .ruled::after { content: ''; width: 36px; height: 1px; background: #b29a7b; }
 .hero h1 { font: 400 clamp(3.9rem, 9vw, 8.3rem)/1.12 var(--script); letter-spacing: 0; margin: 14px 0 18px; }
-.cover-names i, .hero .amp { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: .65em; }
+.cover-names i, .hero .amp { font: inherit; }
 .hero h1:focus, .reply-receipt h3:focus { outline: none; }
 .amp { font-size: .83em; }
 .hero-date { display: block; font-size: clamp(1.45rem, 2.6vw, 1.95rem); font-weight: 500; }
