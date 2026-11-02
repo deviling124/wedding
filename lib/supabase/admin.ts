@@ -8,3 +8,4 @@ export function createSupabaseAdminClient() {
     auth: { autoRefreshToken: false, persistSession: false },
   });
 }
+

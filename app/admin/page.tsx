@@ -3,6 +3,9 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { isAdminEmail } from "@/lib/auth";
 import { LogoutButton } from "./LogoutButton";
+import { ExportButton } from "./ExportButton";
+import { InvitationManager } from "./InvitationManager";
+import { AdminTabs } from "./AdminTabs";
 
 export const dynamic = "force-dynamic";
 
@@ -11,8 +14,18 @@ function householdLabel(value: unknown) {
   return (value as { display_name?: string } | null)?.display_name ?? "—";
 }
 
+function householdGuestOf(value: unknown) {
+  if (Array.isArray(value)) return (value[0] as { guest_of?: string | null } | undefined)?.guest_of ?? "—";
+  return (value as { guest_of?: string | null } | null)?.guest_of ?? "—";
+}
+
 function guestName(value: { full_name?: string | null; first_name?: string | null; last_name?: string | null }) {
   return value.full_name || [value.first_name, value.last_name].filter(Boolean).join(" ") || "—";
+}
+
+function rsvpGuestNames(value: { guest_names?: unknown; full_name?: string | null; first_name?: string | null; last_name?: string | null }) {
+  if (Array.isArray(value.guest_names) && value.guest_names.length) return value.guest_names.filter((name): name is string => typeof name === "string" && Boolean(name.trim()));
+  return guestName(value).split(/,\s*/).filter(Boolean);
 }
 
 export default async function AdminPage() {
@@ -24,7 +37,7 @@ export default async function AdminPage() {
   const supabase = createSupabaseAdminClient();
   const { data: rsvps, error } = await supabase
     .from("rsvps")
-    .select("id, full_name, first_name, last_name, attendance, guest_count, updated_at, households(display_name)")
+    .select("id, full_name, guest_names, first_name, last_name, email, attendance, guest_count, updated_at, households(display_name, guest_of)")
     .order("updated_at", { ascending: false });
   if (error) throw new Error(error.message);
   const accepted = (rsvps ?? []).filter((rsvp) => rsvp.attendance === "joyfully-accept");
@@ -33,12 +46,17 @@ export default async function AdminPage() {
   return (
     <main className="admin-shell">
       <div className="admin-header">
-        <div><div className="eyebrow">Private dashboard</div><h1>Guest list</h1><p>{accepted.length} accepted households · {guestTotal} guests attending · {(rsvps ?? []).filter((rsvp) => rsvp.attendance === "regretfully-decline").length} declined</p></div>
-        <LogoutButton />
+        <div><div className="eyebrow">Private dashboard</div><h1>Guest list</h1><p>{accepted.length} accepted replies · {guestTotal} guests attending · {(rsvps ?? []).filter((rsvp) => rsvp.attendance === "regretfully-decline").length} declined</p></div>
+        <div className="admin-actions"><ExportButton /><LogoutButton /></div>
       </div>
-      <div className="admin-table-wrap">
-        {!rsvps?.length ? <div className="empty">No RSVPs yet. Your first reply will appear here.</div> : <table className="admin-table"><thead><tr><th>Guest</th><th>Invitation group</th><th>Reply</th><th>Guests</th><th>Updated</th></tr></thead><tbody>{rsvps.map((rsvp) => <tr key={rsvp.id}><td><strong>{guestName(rsvp)}</strong></td><td>{householdLabel(rsvp.households)}</td><td><span className={`status ${rsvp.attendance === "regretfully-decline" ? "declined" : ""}`}>{rsvp.attendance === "joyfully-accept" ? "Accepted" : "Declined"}</span></td><td>{rsvp.guest_count}</td><td>{new Date(rsvp.updated_at).toLocaleDateString("en-SG", { day: "numeric", month: "short", year: "numeric" })}</td></tr>)}</tbody></table>}
-      </div>
+      <AdminTabs
+        guestList={
+          <div className="admin-table-wrap">
+            {!rsvps?.length ? <div className="empty">No RSVPs yet. Your first reply will appear here.</div> : <table className="admin-table"><thead><tr><th>Guest</th><th>Invitation group</th><th>Guest of</th><th>Reply</th><th>Guests</th><th>Updated</th></tr></thead><tbody>{rsvps.flatMap((rsvp) => { const names = rsvpGuestNames(rsvp); return names.map((name, index) => <tr key={`${rsvp.id}-${index}`}><td><strong>{name}</strong>{index === 0 && rsvp.email && <small>{rsvp.email}</small>}</td>{index === 0 && <><td rowSpan={names.length}>{householdLabel(rsvp.households)}</td><td rowSpan={names.length}>{householdGuestOf(rsvp.households)}</td><td rowSpan={names.length}><span className={`status ${rsvp.attendance === "regretfully-decline" ? "declined" : ""}`}>{rsvp.attendance === "joyfully-accept" ? "Accepted" : "Declined"}</span></td><td rowSpan={names.length}>{rsvp.guest_count}</td><td rowSpan={names.length}>{new Date(rsvp.updated_at).toLocaleDateString("en-SG", { day: "numeric", month: "short", year: "numeric" })}</td></>}</tr>); })}</tbody></table>}
+          </div>
+        }
+        invitationLinks={<InvitationManager />}
+      />
     </main>
   );
 }

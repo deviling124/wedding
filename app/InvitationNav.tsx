@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const links = [["details", "Details"], ["locations", "Map"], ["dresscode", "Dress code"], ["gallery", "Gallery"], ["travel", "Travel"]];
+const links = [["locations", "Map"], ["dresscode", "Dress code"], ["gallery", "Gallery"]];
 
 export default function InvitationNav() {
   const [open, setOpen] = useState(false);
@@ -44,3 +44,4 @@ export default function InvitationNav() {
     </nav>
   );
 }
+

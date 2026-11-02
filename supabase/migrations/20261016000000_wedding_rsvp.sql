@@ -28,9 +28,10 @@ alter table public.rsvps enable row level security;
 revoke all on public.households from anon, authenticated;
 revoke all on public.rsvps from anon, authenticated;
 
-comment on table public.households is 'One row per invited household. Store only SHA-256 invite code hashes.';
+comment on table public.households is 'One row per invited household. Invite codes are used only by server-side admin and RSVP routes.';
 comment on table public.rsvps is 'Latest RSVP response per invited household. Accessed by the server-side service role only.';
 
 -- Example household seed. Replace with your own rows; never commit real invite codes.
 -- insert into public.households (invite_code_hash, display_name, max_guests)
 -- values (encode(digest('MAYA-THEO-01', 'sha256'), 'hex'), 'Chen household', 2);
+

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import InvitationNav from "./InvitationNav";
 import ReplyForm from "./ReplyForm";
@@ -8,8 +9,8 @@ type DressRole = "Primary Sponsor" | "Secondary Sponsor" | "Guest";
 
 const dressGuides: Record<DressRole, { title: string; copy: string }> = {
   "Primary Sponsor": {
-    title: "Polished formal",
-    copy: "Deep chocolate, espresso, or warm neutrals with a tailored silhouette. A jacket, dress, or elegant set will feel right for the ceremony.",
+    title: "Principal sponsor attire",
+    copy: "Ladies: long formal gown in the wedding motif colors. Gentlemen: traditional Barong Tagalog with black pants.",
   },
   "Secondary Sponsor": {
     title: "Soft formal",
@@ -17,13 +18,13 @@ const dressGuides: Record<DressRole, { title: string; copy: string }> = {
   },
   Guest: {
     title: "Garden formal",
-    copy: "Think romantic, comfortable, and polished: colour, linen, soft tailoring, and dancing shoes encouraged.",
+    copy: "Think romantic, comfortable, and polished: colour, linen, soft tailoring, and comfortable shoes encouraged.",
   },
 };
 
 type Countdown = { days: number; hours: number; minutes: number; seconds: number };
 
-const WEDDING_DATE = "2027-01-30T16:30:00+08:00";
+const WEDDING_DATE = "2027-01-30T14:00:00+08:00";
 const CEREMONY_MAP_URL = "https://www.google.com/maps/search/?api=1&query=Immaculate+Conception+Parish+Church%2C+Bauan%2C+Batangas";
 const RECEPTION_MAP_URL = "https://www.google.com/maps/search/?api=1&query=Pramea+Grand+Pavilion%2C+Bauan%2C+Batangas";
 
@@ -42,26 +43,53 @@ function AKMonogram() {
   return <img className="ak-monogram" src="/monogram.webp" width="360" height="240" alt="Adrian and KC floral gold monogram" loading="eager" />;
 }
 
-function DressCodeIllustration() {
+function MessengerIcon() {
   return (
-    <svg className="dress-illustration-svg" viewBox="0 0 260 260" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M58 62 78 46l18 16-8 14 7 132H42l7-132-8-14Z" />
-      <path d="M78 46v45L58 62M78 91l18-29M65 112h26M65 133h26M65 154h26" />
-      <circle cx="78" cy="120" r="2.2" fill="currentColor" stroke="none" />
-      <circle cx="78" cy="141" r="2.2" fill="currentColor" stroke="none" />
-      <circle cx="78" cy="162" r="2.2" fill="currentColor" stroke="none" />
-      <path className="dress-gold" d="M174 46c-9 0-15 7-15 17 0 10 6 16 6 28-13 19-23 58-28 101h74c-5-43-15-82-28-101 0-12 6-18 6-28 0-10-6-17-15-17Z" />
-      <path className="dress-gold" d="M165 91c5 7 13 7 18 0M137 192c22 5 52 5 74 0" />
-      <path className="dress-line-soft" d="M26 214h208M26 214c7-5 13-8 20-8M234 214c-7-5-13-8-20-8" />
+    <svg className="messenger-icon-svg" viewBox="0 0 32 32" aria-hidden="true">
+      <path fill="currentColor" d="M16 3C8.4 3 2.5 8.2 2.5 14.8c0 3.7 1.9 7 5 9.2v4.2l4.2-2.3c1.3.4 2.8.6 4.3.6 7.6 0 13.5-5.2 13.5-11.7S23.6 3 16 3Z" />
+      <path fill="#0084ff" d="m8.5 18.4 5.1-5.5 2.7 2.4 5.1-2.7-5.2 5.6-2.7-2.4-5 2.6Z" />
     </svg>
   );
 }
 
-function GalleryTile({ number, label, title, tone }: { number: string; label: string; title: string; tone: string }) {
+const dressRoleImages: Record<DressRole, { src: string; alt: string }> = {
+  "Primary Sponsor": {
+    src: "/principal-sponsor-dress-code.png",
+    alt: "Principal sponsor dress code: long formal gown for ladies and traditional Barong Tagalog with black pants",
+  },
+  "Secondary Sponsor": {
+    src: "https://images.unsplash.com/photo-1558888867-574563243917?auto=format&fit=crop&w=900&q=80",
+    alt: "Woman wearing an elegant formal dress",
+  },
+  Guest: {
+    src: "https://images.unsplash.com/photo-1550784718-990c6de52adf?auto=format&fit=crop&w=900&q=80",
+    alt: "Couple dressed formally for a wedding",
+  },
+};
+
+function DressCodeIllustration({ role }: { role: DressRole }) {
+  const image = dressRoleImages[role];
+
+  return <img key={role} className={`dress-placeholder-image${role === "Primary Sponsor" ? " dress-poster-image" : ""}`} src={image.src} alt={image.alt} />;
+}
+
+type GalleryItem = { number: string; imageSrc: string };
+
+const galleryItems: GalleryItem[] = [
+  { number: "1", imageSrc: "/gallery-placeholder.png" },
+  { number: "2", imageSrc: "/gallery-placeholder.png" },
+  { number: "3", imageSrc: "/gallery-placeholder.png" },
+  { number: "4", imageSrc: "/gallery-placeholder.png" },
+  { number: "5", imageSrc: "/gallery-placeholder.png" },
+  { number: "6", imageSrc: "/gallery-placeholder.png" },
+];
+
+function GalleryTile({ number, imageSrc, onOpen }: GalleryItem & { onOpen: () => void }) {
   return (
-    <article className={`gallery-frame ${tone}`}>
-      <div className="gallery-frame-top"><span>0{number}</span><span className="gallery-glyph" aria-hidden="true">✦</span></div>
-      <div className="gallery-caption"><div>{label}</div><h3>{title}</h3></div>
+    <article className="gallery-frame">
+      <button className="gallery-button" type="button" onClick={onOpen} aria-label={`Open couple photo ${number}`}>
+        <Image className="gallery-image" src={imageSrc} alt="A placeholder photo of Adrian and KC" fill sizes="(max-width: 760px) 50vw, 33vw" />
+      </button>
     </article>
   );
 }
@@ -93,6 +121,7 @@ export default function HomePage() {
   const [envelopeOpening, setEnvelopeOpening] = useState(false);
   const heroTitle = useRef<HTMLHeadingElement>(null);
   const [dressRole, setDressRole] = useState<DressRole>("Guest");
+  const [activeGallery, setActiveGallery] = useState<GalleryItem | null>(null);
 
   useEffect(() => {
     const reveals = document.querySelectorAll<HTMLElement>(".reveal");
@@ -115,17 +144,32 @@ export default function HomePage() {
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
-    if (showEnvelope) document.body.style.overflow = "hidden";
+    if (showEnvelope || activeGallery) document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = previousOverflow;
     };
-  }, [showEnvelope]);
+  }, [showEnvelope, activeGallery]);
+
+  useEffect(() => {
+    if (!activeGallery) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActiveGallery(null);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [activeGallery]);
 
   useEffect(() => {
     if (!showEnvelope) {
-      const destination = document.getElementById(window.location.hash.slice(1));
-      (destination || heroTitle.current)?.focus({ preventScroll: true });
-      destination?.scrollIntoView({ behavior: "instant" });
+      const hash = window.location.hash.slice(1);
+      const destination = hash ? document.getElementById(hash) : null;
+      if (destination) {
+        destination.focus({ preventScroll: true });
+        destination.scrollIntoView({ behavior: "instant" });
+      } else {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        heroTitle.current?.focus({ preventScroll: true });
+      }
     }
   }, [showEnvelope]);
   function openInvitation() {
@@ -154,7 +198,7 @@ export default function HomePage() {
           <span className="envelope-prompt">Tap to open your invitation</span>
         </button>
       )}
-      <div className="invitation" inert={showEnvelope}>
+      <div className="invitation" inert={showEnvelope || Boolean(activeGallery)}>
       <a className="skip-link" href="#top">Skip to invitation</a>
       <InvitationNav />
       <main id="top" tabIndex={-1}>
@@ -173,15 +217,6 @@ export default function HomePage() {
           </div>
         </section>
         <WeddingCountdown />
-        <section className="section mist" id="details" tabIndex={-1}>
-          <div className="section-head reveal"><div className="eyebrow">The weekend at a glance</div><h2>Come as you are.</h2><p>One beautiful evening, a long table under the lights, and plenty of time to catch up.</p></div>
-          <div className="facts reveal">
-            <div className="fact"><div className="label">When</div><strong>January 30, 2027</strong><p>Ceremony begins at 2:00 PM</p></div>
-            <div className="fact"><div className="label">Ceremony</div><strong>Immaculate Conception Parish Church</strong><p>Bauan, Batangas · <a className="text-link" href={CEREMONY_MAP_URL} target="_blank" rel="noreferrer">Map ↗</a></p></div>
-            <div className="fact"><div className="label">Reception</div><strong>Pramea Grand Pavilion</strong><p>Following the ceremony · <a className="text-link" href={RECEPTION_MAP_URL} target="_blank" rel="noreferrer">Map ↗</a></p></div>
-            <div className="fact"><div className="label">Dress</div><strong>Garden formal</strong><p>Colour, linen, and dancing shoes encouraged</p></div>
-          </div>
-        </section>
 
         <section className="section paper">
           <div className="section-head reveal"><div className="eyebrow">The shape of the day</div><h2>Meet us under the trees.</h2></div>
@@ -189,7 +224,7 @@ export default function HomePage() {
             <div className="event"><div className="event-time">1:30 PM</div><div><h3>Arrive &amp; exhale</h3><p>Arrive at Immaculate Conception Parish Church and find your seat before the ceremony.</p></div></div>
             <div className="event"><div className="event-time">2:00 PM</div><div><h3>The ceremony</h3><p>Short, sweet, and hopefully only a little bit teary.</p></div></div>
             <div className="event"><div className="event-time">After ceremony</div><div><h3>Celebrate together</h3><p>We’ll continue the celebration at Pramea Grand Pavilion.</p></div></div>
-            <div className="event"><div className="event-time">Evening</div><div><h3>Dinner &amp; dancing</h3><p>Toasts, a long table, and the first of many dance-floor appearances.</p></div></div>
+            <div className="event"><div className="event-time">Evening</div><div><h3>Dinner &amp; toasts</h3><p>Toasts, a long table, and an evening under the trees.</p></div></div>
           </div>
         </section>
 
@@ -197,18 +232,24 @@ export default function HomePage() {
           <div className="section-head reveal"><div className="eyebrow">Find your way</div><h2>Meet us here.</h2><p>Save these two locations for the day. Each link opens directions in Google Maps.</p></div>
           <div className="location-grid reveal">
             <article className="location-card">
-              <div className="location-number">01</div>
-              <div className="eyebrow">Ceremony · 2:00 PM</div>
-              <h3>Immaculate Conception Parish Church</h3>
-              <p>Bauan, Batangas</p>
-              <a className="button secondary" href={CEREMONY_MAP_URL} target="_blank" rel="noreferrer">Open in Google Maps <span aria-hidden="true">↗</span></a>
+              <div className="location-photo"><Image src="/immaculate-church.png" alt="Immaculate Conception Parish Church" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
+              <div className="location-card-content">
+                <div className="location-number">01</div>
+                <div className="eyebrow">Ceremony · 2:00 PM</div>
+                <h3>Immaculate Conception Parish Church</h3>
+                <p>Bauan, Batangas</p>
+                <a className="button secondary" href={CEREMONY_MAP_URL} target="_blank" rel="noreferrer">Open in Google Maps <span aria-hidden="true">↗</span></a>
+              </div>
             </article>
             <article className="location-card">
-              <div className="location-number">02</div>
-              <div className="eyebrow">Reception · After the ceremony</div>
-              <h3>Pramea Grand Pavilion</h3>
-              <p>Bauan, Batangas</p>
-              <a className="button secondary" href={RECEPTION_MAP_URL} target="_blank" rel="noreferrer">Open in Google Maps <span aria-hidden="true">↗</span></a>
+              <div className="location-photo"><Image src="/grand-pramea.jpg" alt="Grand Pramea reception entrance" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
+              <div className="location-card-content">
+                <div className="location-number">02</div>
+                <div className="eyebrow">Reception · After the ceremony</div>
+                <h3>Pramea Grand Pavilion</h3>
+                <p>Bauan, Batangas</p>
+                <a className="button secondary" href={RECEPTION_MAP_URL} target="_blank" rel="noreferrer">Open in Google Maps <span aria-hidden="true">↗</span></a>
+              </div>
             </article>
           </div>
         </section>
@@ -216,10 +257,10 @@ export default function HomePage() {
         <section className="section mist" id="dresscode" tabIndex={-1}>
           <div className="section-head reveal"><div className="eyebrow">What to wear</div><h2>Dress with ease.</h2><p>A polished garden-formal look in the warm tones of our day.</p></div>
           <div className="dress-card reveal">
-            <div className="dress-art"><DressCodeIllustration /></div>
+            <div className="dress-art"><DressCodeIllustration role={dressRole} /></div>
             <div className="dress-copy">
               <div className="dress-value">Garden formal</div>
-              <p>Think tailored, romantic, and comfortable enough for dinner, dancing, and a little wandering under the trees.</p>
+              <p>Think tailored, romantic, and comfortable enough for dinner, conversation, and a little wandering under the trees.</p>
               <div className="dress-role-options" role="group" aria-label="Dress code by role">
                 {(Object.keys(dressGuides) as DressRole[]).map((role) => (
                   <button className={`dress-role${dressRole === role ? " selected" : ""}`} type="button" key={role} onClick={() => setDressRole(role)} aria-pressed={dressRole === role}>
@@ -233,49 +274,58 @@ export default function HomePage() {
                 <p>{dressGuides[dressRole].copy}</p>
               </div>
               <div className="dress-palette" aria-label="Suggested colour palette">
-                <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#46352e" }} /><span>Espresso</span></div>
                 <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#62473b" }} /><span>Chocolate</span></div>
                 <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#8b7061" }} /><span>Mocha</span></div>
                 <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#b69b89" }} /><span>Cappuccino</span></div>
                 <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#d8c5a9" }} /><span>Champagne</span></div>
               </div>
-              <div className="dress-notes"><p><strong>For everyone:</strong> Colour, linen, soft tailoring, and dancing shoes encouraged.</p><p><strong>A gentle note:</strong> Please leave white and ivory for the couple.</p></div>
+              <div className="dress-notes"><p><strong>For everyone:</strong> Colour, linen, soft tailoring, and comfortable shoes encouraged.</p><p><strong>A gentle note:</strong> Please leave white and ivory for the couple.</p></div>
             </div>
           </div>
         </section>
 
         <section className="section paper" id="gallery" tabIndex={-1}>
-          <div className="section-head reveal"><div className="eyebrow">A few favorite details</div><h2>Before the big day.</h2><p>A little visual moodboard for the colour, light, and feeling we’re bringing to the weekend.</p></div>
+          <div className="section-head reveal"><div className="eyebrow">The two of us</div><h2>A little more us.</h2><p>A few photos of the two of us, from the everyday moments to the ones we’ll always remember.</p></div>
           <div className="gallery-grid reveal">
-            <GalleryTile number="1" label="The palette" title="Chocolate &amp; champagne" tone="gallery-chocolate" />
-            <GalleryTile number="2" label="The setting" title="Under the trees" tone="gallery-cappuccino" />
-            <GalleryTile number="3" label="The table" title="Long, warm evenings" tone="gallery-mocha" />
-            <GalleryTile number="4" label="The feeling" title="A little bit of forever" tone="gallery-champagne" />
-            <GalleryTile number="5" label="The details" title="Soft light &amp; gold" tone="gallery-espresso" />
-            <GalleryTile number="6" label="The dance floor" title="One last song" tone="gallery-sand" />
+            {galleryItems.map((gallery) => <GalleryTile key={gallery.number} {...gallery} onOpen={() => setActiveGallery(gallery)} />)}
           </div>
         </section>
 
         <section className="section mist" id="rsvp" tabIndex={-1}>
           <div className="rsvp-wrap reveal">
-            <div className="rsvp-intro"><div className="eyebrow">Before we plan the table</div><h2>Will you join us?</h2><p>Please reply by 1 July 2027. We’re looking forward to celebrating with you.</p></div>
+            <div className="rsvp-intro"><div className="eyebrow">Before we plan the table</div><h2>Will you join us?</h2><p>Please reply by December 31, 2026. We’re looking forward to celebrating with you.</p></div>
             <div className="rsvp-card">
               <ReplyForm />
             </div>
           </div>
         </section>
 
-        <section className="section paper" id="travel" tabIndex={-1}>
-          <div className="section-head reveal"><div className="eyebrow">A few helpful things</div><h2>Make a weekend of it.</h2><p>For friends coming from near and far, here are three easy starting points.</p></div>
-          <div className="travel reveal">
-            <div className="travel-card"><div className="number">01</div><h3>Getting there</h3><p>Please arrive at Immaculate Conception Parish Church before 2:00 PM. The reception follows at Pramea Grand Pavilion.</p></div>
-            <div className="travel-card"><div className="number">02</div><h3>Where to stay</h3><p>For guests traveling in, we’ll share nearby accommodation suggestions for Bauan and Batangas soon.</p></div>
-            <div className="travel-card"><div className="number">03</div><h3>Questions?</h3><p>Send a note to <a href="mailto:hello@adrianandkc.example">hello@adrianandkc.example</a> and we’ll help however we can.</p></div>
+        <section className="section paper contact-section" id="contact" tabIndex={-1}>
+          <div className="contact-panel reveal">
+            <div className="contact-copy"><div className="eyebrow">Questions?</div><h2>We’re here to help.</h2><p>Send us a message anytime. We’ll be happy to help with anything about the day.</p></div>
+            <div className="messenger-links" aria-label="Contact us on Messenger">
+              <a className="messenger-card" href="http://m.me/john.adrian124" target="_blank" rel="noreferrer"><span className="messenger-icon"><MessengerIcon /></span><span className="messenger-card-copy"><small>Message</small><strong>Adrian</strong></span><span className="messenger-arrow" aria-hidden="true">↗</span></a>
+              <a className="messenger-card" href="http://m.me/yzakath" target="_blank" rel="noreferrer"><span className="messenger-icon"><MessengerIcon /></span><span className="messenger-card-copy"><small>Message</small><strong>KC</strong></span><span className="messenger-arrow" aria-hidden="true">↗</span></a>
+            </div>
           </div>
         </section>
+
       </main>
       <footer><h2>See you there.</h2><p>With love, Adrian &amp; KC</p></footer>
       </div>
+      {activeGallery && (
+        <div className="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Couple photo preview" onClick={(event) => { if (event.target === event.currentTarget) setActiveGallery(null); }}>
+          <div className="gallery-lightbox-card">
+            <button className="gallery-lightbox-close" type="button" autoFocus onClick={() => setActiveGallery(null)} aria-label="Close photo preview">
+              Close <span aria-hidden="true">×</span>
+            </button>
+            <div className="gallery-lightbox-media">
+              <Image src={activeGallery.imageSrc} alt="A placeholder photo of Adrian and KC" fill sizes="(max-width: 760px) 92vw, 860px" />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
+

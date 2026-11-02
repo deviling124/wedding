@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.next-build/
+.vercel/
+.env*
+!.env.example
+supabase/.temp/
+
+.vercel
+.env*
+

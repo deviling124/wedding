@@ -12,3 +12,4 @@ export function LogoutButton() {
   }
   return <button className="button secondary" type="button" onClick={logout}>Sign out</button>;
 }
+
