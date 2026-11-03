@@ -7,15 +7,15 @@ import EnvelopeCover from "./EnvelopeCover";
 import InvitationNav from "./InvitationNav";
 import ReplyForm from "./ReplyForm";
 
-type DressRole = "Primary Sponsor" | "Secondary Sponsor" | "Guest";
+type DressRole = "Principal Sponsor" | "Secondary Sponsor" | "Guest";
 
 const dressGuides: Record<DressRole, { title: string; copy: string }> = {
-  "Primary Sponsor": {
+  "Principal Sponsor": {
     title: "Principal sponsor attire",
     copy: "Ladies: long formal gown in the wedding motif colors. Gentlemen: traditional Barong Tagalog with black pants.",
   },
   "Secondary Sponsor": {
-    title: "Chocolate brown formal",
+    title: "Secondary sponsor attire",
     copy: "Ladies: floor-length chocolate brown formal gown. Gentlemen: chocolate brown formal suit.",
   },
   Guest: {
@@ -94,7 +94,7 @@ const guestDressOptions = [
 ] as const;
 
 const dressRoleImages: Record<Exclude<DressRole, "Guest">, { src: string; alt: string }> = {
-  "Primary Sponsor": {
+  "Principal Sponsor": {
     src: "/principal-sponsor-dress-code.png",
     alt: "Principal sponsor dress code: long formal gown for ladies and traditional Barong Tagalog with black pants",
   },
