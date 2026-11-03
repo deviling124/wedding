@@ -40,28 +40,7 @@ html { scroll-behavior: smooth; }
 body { margin: 0; color: var(--ink); background: var(--cream); font-family: var(--sans); line-height: 1.55; }
 a { color: inherit; }
 button, input, select, textarea { font: inherit; }
-.envelope-overlay { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: 24px; border: 0; color: var(--cream); background: radial-gradient(ellipse 82% 72% at 50% 35%, #62473b 0%, #46352e 68%, #2d211d 100%); cursor: pointer; perspective: 1400px; transition: opacity .45s ease 1s, visibility .45s ease 1s; }
-.envelope-overlay::before { content: ''; position: absolute; width: 440px; height: 440px; border-radius: 50%; background: radial-gradient(circle, rgba(216,197,169,.13), rgba(216,197,169,.03) 38%, transparent 70%); filter: blur(8px); pointer-events: none; }
-.envelope-overlay.opening { opacity: 0; visibility: hidden; pointer-events: none; }
-.envelope-box { position: relative; width: min(78vw, 360px); aspect-ratio: 1.52 / 1; transform-style: preserve-3d; filter: drop-shadow(0 32px 42px rgba(25,16,13,.36)); animation: envelopeFloat 5s ease-in-out infinite; }
-.envelope-back { position: absolute; inset: 0; border-radius: 7px; background: linear-gradient(145deg, #fbf5ec 0%, #eadfd3 52%, #cbb29b 100%); box-shadow: 0 24px 50px rgba(25,16,13,.28), 0 6px 15px rgba(25,16,13,.12); }
-.envelope-back::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(135deg, rgba(255,255,255,.28), transparent 45%, rgba(70,53,46,.05)); }
-.envelope-card { position: absolute; left: 6%; right: 6%; top: -11%; height: 84%; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 4px; background: linear-gradient(145deg, #fffdf9 0%, #f7eee3 100%); box-shadow: 0 12px 28px rgba(25,16,13,.24), 0 2px 5px rgba(25,16,13,.1); transform: translateY(30%) translateZ(5px); transition: transform 1.05s cubic-bezier(.16,1,.3,1), box-shadow 1s ease; z-index: 1; }
-.envelope-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255,255,255,.72), transparent 45%); }
-.envelope-card-mark { position: relative; z-index: 1; display: block; width: 168px; height: 112px; padding: 4px; color: var(--gold); background: transparent; border-radius: 10px; }
 .ak-monogram { display: block; width: 100%; height: 100%; object-fit: contain; }
-.envelope-pocket, .envelope-flap { position: absolute; left: 0; right: 0; background: linear-gradient(145deg, #62473b 0%, #46352e 100%); }
-.envelope-pocket { bottom: -1px; height: 100%; clip-path: polygon(0 100%, 100% 100%, 100% 22%, 50% 62%, 0 22%); z-index: 2; box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
-.envelope-flap { top: 0; height: 58%; display: flex; align-items: flex-start; justify-content: center; padding-top: 10%; clip-path: polygon(0 0, 100% 0, 50% 68%); transform-origin: top center; transform: rotateX(0deg) translateZ(10px); backface-visibility: hidden; transition: transform 1.05s cubic-bezier(.16,1,.3,1); z-index: 3; }
-.envelope-flap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,.06), transparent 50%); }
-.envelope-seal { position: relative; z-index: 1; display: block; width: 106px; height: 72px; padding: 3px; color: var(--gold-light); background: transparent; border-radius: 9px; }
-.envelope-prompt { position: relative; z-index: 10; margin-top: 36px; color: rgba(216,197,169,.8); font-size: .74rem; letter-spacing: .18em; text-align: center; text-transform: uppercase; animation: promptPulse 2.6s ease-in-out infinite; }
-.envelope-overlay.opening .envelope-flap { transform: rotateX(-180deg) translateZ(10px); }
-.envelope-overlay.opening .envelope-card { transform: translateY(-18%) translateZ(5px); box-shadow: 0 22px 42px rgba(25,16,13,.3); }
-.envelope-overlay.opening .envelope-box { animation: none; }
-@keyframes envelopeFloat { 0%, 100% { transform: translateY(0) rotateZ(0deg); } 50% { transform: translateY(-6px) rotateZ(.15deg); } }
-@keyframes promptPulse { 0%, 100% { opacity: .48; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-2px); } }
-.envelope-overlay:focus-visible { outline: 3px solid var(--cream); outline-offset: -8px; }
 .eyebrow { color: var(--deep-sage); font-size: .76rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
 h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.05; margin: 0; }
 h1 { font-size: clamp(4.2rem, 13vw, 10rem); font-style: italic; letter-spacing: -.065em; margin: 22px 0 28px; }
@@ -271,9 +250,6 @@ footer p { opacity: .7; margin: 12px 0 0; }
   .created-invite input { grid-column: 1 / -1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .envelope-overlay { transition: none; }
-  .envelope-box, .envelope-prompt { animation: none; }
-  .envelope-card, .envelope-flap { transition: none; }
   .hero-seal, .hero .eyebrow, .hero h1, .hero-date, .countdown, .hero-note, .hero .button { animation: none; opacity: 1; }
   .reveal { transition: none; opacity: 1; transform: none; }
   .travel-card { transition: none; }
@@ -282,33 +258,23 @@ footer p { opacity: .7; margin: 12px 0 0; }
 
 /* The invitation cover and the page share the same engraved stationery. */
 .invitation { --serif: 'Cormorant Garamond', Georgia, serif; }
-.envelope-overlay, .hero {
+.hero {
   isolation: isolate;
   background: radial-gradient(ellipse at 48% 34%, #fffcf6 0%, #faf4eb 45%, #eee1d3 100%);
   color: var(--ink);
 }
-.envelope-overlay { overflow: hidden; gap: 0; padding: 28px 16px; }
-.envelope-overlay::before, .hero-botanicals {
+.hero-botanicals {
   position: absolute; inset: 0; width: auto; height: auto; z-index: -1;
   pointer-events: none; border-radius: 0; filter: none;
   background: url('/botanical.svg') no-repeat left -5vw bottom -6vw / clamp(150px, 26vw, 430px) auto;
   opacity: .76;
 }
-.envelope-overlay::after, .hero-botanicals::after {
+.hero-botanicals::after {
   content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: url('/botanical.svg') no-repeat left -6vw bottom -8vw / clamp(140px, 24vw, 400px) auto;
   transform: scaleX(-1);
 }
-.cover-kicker, .cover-date, .envelope-prompt {
-  position: relative; color: var(--deep-sage); font-size: .74rem; font-weight: 600;
-  letter-spacing: .17em; text-transform: uppercase;
-}
-.cover-names { font: 400 clamp(3.25rem, 16vw, 8.5rem)/1.16 var(--script); letter-spacing: 0; margin: 12px 0; }
-.cover-names i, .brand-name i, .amp { color: #946c52; font-weight: 400; }
-.envelope-box { width: min(72vw, 390px, 44svh); flex-shrink: 0; margin-top: clamp(28px, 5vh, 54px); animation: none; }
-.envelope-prompt { animation: none; margin-top: 28px; padding: 12px 18px; border-bottom: 1px solid #b29776; }
-.envelope-overlay:focus-visible { outline-color: #83613b; }
-.envelope-seal { width: 94px; height: 64px; }
+.brand-name i, .amp { color: #946c52; font-weight: 400; }
 :focus-visible { outline: 2px solid #78522e; outline-offset: 4px; }
 .skip-link { position: fixed; top: 8px; left: 12px; transform: translateY(-180%); z-index: 30; background: var(--paper); padding: 10px; }
 .skip-link:focus { transform: none; }
@@ -331,7 +297,7 @@ html { scroll-padding-top: 84px; }
 .ruled { display: flex; justify-content: center; align-items: center; gap: 13px; }
 .ruled::before, .ruled::after { content: ''; width: 36px; height: 1px; background: #b29a7b; }
 .hero h1 { font: 400 clamp(4.9rem, 11.25vw, 10.25rem)/1.12 var(--script); letter-spacing: 0; margin: 14px 0 18px; }
-.cover-names i, .hero .amp { font: inherit; }
+.hero .amp { font: inherit; }
 .hero h1:focus, .reply-receipt h3:focus { outline: none; }
 .amp { font-size: .83em; }
 .hero-date { display: block; font-size: clamp(1.45rem, 2.6vw, 1.95rem); font-weight: 500; }
@@ -415,8 +381,8 @@ html { scroll-padding-top: 84px; }
   .nav-links a { border-bottom: 1px solid #eadfd1; }
   .hero { padding: 48px max(8vw, 22px) 54px; min-height: 69svh; }
   .hero::before { inset: 9px; }
-  .hero-botanicals, .envelope-overlay::before { background-size: 28vw auto; background-position: left -12vw bottom -6vw; }
-  .hero-botanicals::after, .envelope-overlay::after { background-size: 27vw auto; background-position: left -13vw bottom -5vw; }
+  .hero-botanicals { background-size: 28vw auto; background-position: left -12vw bottom -6vw; }
+  .hero-botanicals::after { background-size: 27vw auto; background-position: left -13vw bottom -5vw; }
   .hero-seal { width: 86px; height: 57px; }
   .hero .eyebrow { font-size: .64rem; letter-spacing: .14em; }
   .ruled { gap: 8px; }
@@ -439,4 +405,3 @@ html { scroll-padding-top: 84px; }
   .invitation *, .invitation *::before, .invitation *::after { animation: none !important; transition: none !important; }
   .button:hover, .button:hover span, .dress-role:hover, .travel-card:hover { transform: none; }
 }
-

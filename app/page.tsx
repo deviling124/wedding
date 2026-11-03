@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import EnvelopeCover from "./EnvelopeCover";
 import InvitationNav from "./InvitationNav";
 import ReplyForm from "./ReplyForm";
 
@@ -172,6 +173,12 @@ export default function HomePage() {
       }
     }
   }, [showEnvelope]);
+  useEffect(() => {
+    if (!envelopeOpening) return;
+    const timer = window.setTimeout(() => setShowEnvelope(false), 1700);
+    return () => window.clearTimeout(timer);
+  }, [envelopeOpening]);
+
   function openInvitation() {
     if (envelopeOpening) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -179,24 +186,12 @@ export default function HomePage() {
       return;
     }
     setEnvelopeOpening(true);
-    window.setTimeout(() => setShowEnvelope(false), 1500);
   }
 
   return (
     <>
       {showEnvelope && (
-        <button className={`envelope-overlay${envelopeOpening ? " opening" : ""}`} type="button" autoFocus onClick={openInvitation} aria-label="Open invitation to the wedding of Adrian and KC">
-          <span className="cover-kicker">The wedding invitation</span>
-          <span className="cover-names">Adrian <i>&amp;</i> KC</span>
-          <span className="cover-date">Saturday, January 30, 2027</span>
-          <span className="envelope-box" aria-hidden="true">
-            <span className="envelope-back" />
-            <span className="envelope-card"><span className="envelope-card-mark"><AKMonogram /></span></span>
-            <span className="envelope-pocket" />
-            <span className="envelope-flap"><span className="envelope-seal"><AKMonogram /></span></span>
-          </span>
-          <span className="envelope-prompt">Tap to open your invitation</span>
-        </button>
+        <EnvelopeCover opening={envelopeOpening} onOpen={openInvitation} />
       )}
       <div className="invitation" inert={showEnvelope || Boolean(activeGallery)}>
       <a className="skip-link" href="#top">Skip to invitation</a>
@@ -328,4 +323,3 @@ export default function HomePage() {
     </>
   );
 }
-
