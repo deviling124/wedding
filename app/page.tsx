@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import type { ComponentProps } from "react";
 import EnvelopeCover from "./EnvelopeCover";
 import InvitationNav from "./InvitationNav";
 import ReplyForm from "./ReplyForm";
@@ -44,6 +45,23 @@ function AKMonogram() {
   return <img className="ak-monogram" src="/monogram.webp" width="360" height="240" alt="Adrian and KC floral gold monogram" loading="eager" />;
 }
 
+type LoadedImageProps = ComponentProps<typeof Image>;
+
+function LoadedImage({ className, onLoad, ...props }: LoadedImageProps) {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <Image
+      {...props}
+      className={`${className ?? ""} image-load-state${loaded ? " is-loaded" : ""}`}
+      onLoad={(event) => {
+        setLoaded(true);
+        onLoad?.(event);
+      }}
+    />
+  );
+}
+
 function MessengerIcon() {
   return (
     <svg className="messenger-icon-svg" viewBox="0 0 32 32" aria-hidden="true">
@@ -70,8 +88,11 @@ const dressRoleImages: Record<DressRole, { src: string; alt: string }> = {
 
 function DressCodeIllustration({ role }: { role: DressRole }) {
   const image = dressRoleImages[role];
+  const [loaded, setLoaded] = useState(false);
 
-  return <img key={role} className={`dress-placeholder-image${role === "Primary Sponsor" ? " dress-poster-image" : ""}`} src={image.src} alt={image.alt} />;
+  useEffect(() => setLoaded(false), [image.src]);
+
+  return <img key={role} className={`dress-placeholder-image${role === "Primary Sponsor" ? " dress-poster-image" : ""} image-load-state${loaded ? " is-loaded" : ""}`} src={image.src} alt={image.alt} loading="eager" onLoad={() => setLoaded(true)} />;
 }
 
 type GalleryItem = { number: string; imageSrc: string };
@@ -89,7 +110,7 @@ function GalleryTile({ number, imageSrc, onOpen }: GalleryItem & { onOpen: () =>
   return (
     <article className="gallery-frame">
       <button className="gallery-button" type="button" onClick={onOpen} aria-label={`Open couple photo ${number}`}>
-        <Image className="gallery-image" src={imageSrc} alt="A placeholder photo of Adrian and KC" fill sizes="(max-width: 760px) 50vw, 33vw" />
+        <LoadedImage className="gallery-image" src={imageSrc} alt="A placeholder photo of Adrian and KC" fill sizes="(max-width: 760px) 50vw, 33vw" />
       </button>
     </article>
   );
@@ -227,7 +248,7 @@ export default function HomePage() {
           <div className="section-head reveal"><div className="eyebrow">Find your way</div><h2>Meet us here.</h2><p>Save these two locations for the day. Each link opens directions in Google Maps.</p></div>
           <div className="location-grid reveal">
             <article className="location-card">
-              <div className="location-photo"><Image src="/immaculate-church.png" alt="Immaculate Conception Parish Church" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
+              <div className="location-photo"><LoadedImage src="/immaculate-church.png" alt="Immaculate Conception Parish Church" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
               <div className="location-card-content">
                 <div className="location-number">01</div>
                 <div className="eyebrow">Ceremony · 2:00 PM</div>
@@ -237,7 +258,7 @@ export default function HomePage() {
               </div>
             </article>
             <article className="location-card">
-              <div className="location-photo"><Image src="/grand-pramea.jpg" alt="Grand Pramea reception entrance" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
+              <div className="location-photo"><LoadedImage src="/grand-pramea.jpg" alt="Grand Pramea reception entrance" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
               <div className="location-card-content">
                 <div className="location-number">02</div>
                 <div className="eyebrow">Reception · After the ceremony</div>
@@ -315,7 +336,7 @@ export default function HomePage() {
               Close <span aria-hidden="true">×</span>
             </button>
             <div className="gallery-lightbox-media">
-              <Image src={activeGallery.imageSrc} alt="A placeholder photo of Adrian and KC" fill sizes="(max-width: 760px) 92vw, 860px" />
+              <LoadedImage src={activeGallery.imageSrc} alt="A placeholder photo of Adrian and KC" fill sizes="(max-width: 760px) 92vw, 860px" />
             </div>
           </div>
         </div>
