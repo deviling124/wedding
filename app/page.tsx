@@ -15,12 +15,12 @@ const dressGuides: Record<DressRole, { title: string; copy: string }> = {
     copy: "Ladies: long formal gown in the wedding motif colors. Gentlemen: traditional Barong Tagalog with black pants.",
   },
   "Secondary Sponsor": {
-    title: "Soft formal",
-    copy: "Choose refined tailoring, a flowing dress, or a coordinated set in mocha, cappuccino, champagne, or another warm earthy tone.",
+    title: "Chocolate brown formal",
+    copy: "Ladies: floor-length chocolate brown formal gown. Gentlemen: chocolate brown formal suit.",
   },
   Guest: {
-    title: "Garden formal",
-    copy: "Think romantic, comfortable, and polished: colour, linen, soft tailoring, and comfortable shoes encouraged.",
+    title: "Smart casual attire",
+    copy: "Dress comfortably and elegantly in our wedding motif colors. Gentlemen: polo or collared shirts with chinos, slacks, or tailored trousers. Ladies: simple dresses, blouses with skirts, or elegant tops with tailored trousers.",
   },
 };
 
@@ -77,12 +77,12 @@ const dressRoleImages: Record<DressRole, { src: string; alt: string }> = {
     alt: "Principal sponsor dress code: long formal gown for ladies and traditional Barong Tagalog with black pants",
   },
   "Secondary Sponsor": {
-    src: "https://images.unsplash.com/photo-1558888867-574563243917?auto=format&fit=crop&w=900&q=80",
-    alt: "Woman wearing an elegant formal dress",
+    src: "/secondary-sponsor-dress-code.png",
+    alt: "Secondary sponsor dress code: floor-length chocolate brown formal gown for ladies and chocolate brown formal suit for gentlemen",
   },
   Guest: {
-    src: "https://images.unsplash.com/photo-1550784718-990c6de52adf?auto=format&fit=crop&w=900&q=80",
-    alt: "Couple dressed formally for a wedding",
+    src: "/guest-dress-code.png",
+    alt: "Guest dress code: smart casual attire in the wedding motif colors",
   },
 };
 
@@ -92,7 +92,7 @@ function DressCodeIllustration({ role }: { role: DressRole }) {
 
   useEffect(() => setLoaded(false), [image.src]);
 
-  return <img key={role} className={`dress-placeholder-image${role === "Primary Sponsor" ? " dress-poster-image" : ""} image-load-state${loaded ? " is-loaded" : ""}`} src={image.src} alt={image.alt} loading="eager" onLoad={() => setLoaded(true)} />;
+  return <img key={role} className={`dress-placeholder-image dress-poster-image image-load-state${loaded ? " is-loaded" : ""}`} src={image.src} alt={image.alt} loading="eager" onLoad={() => setLoaded(true)} />;
 }
 
 type GalleryItem = { number: string; imageSrc: string };
