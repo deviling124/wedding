@@ -19,8 +19,8 @@ const dressGuides: Record<DressRole, { title: string; copy: string }> = {
     copy: "Ladies: floor-length chocolate brown formal gown. Gentlemen: chocolate brown formal suit.",
   },
   Guest: {
-    title: "Smart casual attire",
-    copy: "Dress comfortably and elegantly in our wedding motif colors. Gentlemen: polo or collared shirts with chinos, slacks, or tailored trousers. Ladies: simple dresses, blouses with skirts, or elegant tops with tailored trousers.",
+    title: "Guest attire",
+    copy: "We’d love for you to dress comfortably and elegantly in our wedding motif colors. Gentlemen: polo shirts or collared shirts paired with chinos, slacks, or tailored trousers. Ladies: simple dresses, blouses with skirts, or elegant tops paired with tailored trousers.",
   },
 };
 
@@ -82,7 +82,7 @@ const dressRoleImages: Record<DressRole, { src: string; alt: string }> = {
   },
   Guest: {
     src: "/guest-dress-code.png",
-    alt: "Guest dress code: smart casual attire in the wedding motif colors",
+    alt: "Guest attire: comfortable and elegant wedding attire in the wedding motif colors",
   },
 };
 

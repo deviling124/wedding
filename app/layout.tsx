@@ -2,21 +2,25 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://wedding-rsvp-eight-zeta.vercel.app"),
+  metadataBase: new URL("https://wedding.fenatti.me"),
   title: "Adrian & KC — Our Wedding",
   description: "An invitation to celebrate the wedding of Adrian & KC.",
+  alternates: {
+    canonical: "https://wedding.fenatti.me/",
+  },
   openGraph: {
     title: "Adrian & KC — Our Wedding",
     description: "An invitation to celebrate the wedding of Adrian & KC.",
-    url: "https://wedding-rsvp-eight-zeta.vercel.app",
+    url: "https://wedding.fenatti.me/",
     siteName: "Adrian & KC — Our Wedding",
     type: "website",
     images: [
       {
-          url: "/landing-page-preview.png",
-          width: 802,
-          height: 635,
-          alt: "Adrian and KC wedding invitation landing page",
+        url: "/og-wedding.jpg",
+        width: 1200,
+        height: 630,
+        type: "image/jpeg",
+        alt: "Adrian and KC wedding invitation",
       },
     ],
   },
@@ -24,7 +28,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Adrian & KC — Our Wedding",
     description: "An invitation to celebrate the wedding of Adrian & KC.",
-      images: ["/landing-page-preview.png"],
+    images: ["/og-wedding.jpg"],
   },
 };
 
