@@ -78,7 +78,28 @@ function MessengerIcon() {
   );
 }
 
-const dressRoleImages: Record<DressRole, { src: string; alt: string }> = {
+const guestDressOptions = [
+  {
+    src: "/guest-dress-code.png",
+    alt: "Guest attire: comfortable and elegant wedding attire in the wedding motif colors",
+    title: "Smart casual attire",
+    copy: "We’d love for you to dress comfortably and elegantly in our wedding motif colors. Gentlemen: polo shirts or collared shirts paired with chinos, slacks, or tailored trousers. Ladies: simple dresses, blouses with skirts, or elegant tops paired with tailored trousers.",
+  },
+  {
+    src: "/guest-dress-code2.png",
+    alt: "Guest attire option: casual T-shirts and pants in light and mocha tones",
+    title: "Casual in wedding colors",
+    copy: "Men: casual T-shirt and pants. Women: blouse and pants. Light, mocha, cappuccino, and champagne tones are welcome.",
+  },
+  {
+    src: "/guest-dress-code3.png",
+    alt: "Guest attire option: casual T-shirts and pants in darker wedding tones",
+    title: "Relaxed casual",
+    copy: "Men: casual T-shirt and pants. Women: blouse and pants. Chocolate and other comfortable neutral tones are welcome.",
+  },
+] as const;
+
+const dressRoleImages: Record<Exclude<DressRole, "Guest">, { src: string; alt: string }> = {
   "Primary Sponsor": {
     src: "/principal-sponsor-dress-code.png",
     alt: "Principal sponsor dress code: long formal gown for ladies and traditional Barong Tagalog with black pants",
@@ -87,14 +108,10 @@ const dressRoleImages: Record<DressRole, { src: string; alt: string }> = {
     src: "/secondary-sponsor-dress-code.png",
     alt: "Secondary sponsor dress code: floor-length chocolate brown formal gown for ladies and chocolate brown formal suit for gentlemen",
   },
-  Guest: {
-    src: "/guest-dress-code.png",
-    alt: "Guest attire: comfortable and elegant wedding attire in the wedding motif colors",
-  },
 };
 
-function DressCodeIllustration({ role }: { role: DressRole }) {
-  const image = dressRoleImages[role];
+function DressCodeIllustration({ role, guestOptionIndex, onGuestOptionChange }: { role: DressRole; guestOptionIndex: number; onGuestOptionChange: (index: number) => void }) {
+  const image = role === "Guest" ? guestDressOptions[guestOptionIndex] : dressRoleImages[role];
   const [loaded, setLoaded] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -104,7 +121,22 @@ function DressCodeIllustration({ role }: { role: DressRole }) {
     if (imageElement?.complete && imageElement.naturalWidth > 0) setLoaded(true);
   }, [image.src]);
 
-  return <img ref={imageRef} key={role} className={`dress-placeholder-image dress-poster-image image-load-state${loaded ? " is-loaded" : ""}`} src={image.src} alt={image.alt} loading="eager" onLoad={() => setLoaded(true)} />;
+  return (
+    <div className="dress-slider">
+      <img ref={imageRef} key={image.src} className={`dress-placeholder-image dress-poster-image image-load-state${loaded ? " is-loaded" : ""}`} src={image.src} alt={image.alt} loading="eager" onLoad={() => setLoaded(true)} />
+      {role === "Guest" && (
+        <div className="dress-slider-controls" aria-label="Guest dress code options">
+          <button className="dress-slider-arrow" type="button" onClick={() => onGuestOptionChange((guestOptionIndex + guestDressOptions.length - 1) % guestDressOptions.length)} aria-label="Previous guest dress code option">‹</button>
+          <div className="dress-slider-dots">
+            {guestDressOptions.map((option, index) => (
+              <button className={`dress-slider-dot${option.src === image.src ? " selected" : ""}`} type="button" key={option.src} aria-label={`Show guest dress code option ${index + 1}`} aria-pressed={option.src === image.src} onClick={() => onGuestOptionChange(index)} />
+            ))}
+          </div>
+          <button className="dress-slider-arrow" type="button" onClick={() => onGuestOptionChange((guestOptionIndex + 1) % guestDressOptions.length)} aria-label="Next guest dress code option">›</button>
+        </div>
+      )}
+    </div>
+  );
 }
 
 type GalleryItem = { number: string; imageSrc: string };
@@ -155,6 +187,7 @@ export default function HomePage() {
   const [envelopeOpening, setEnvelopeOpening] = useState(false);
   const heroTitle = useRef<HTMLHeadingElement>(null);
   const [dressRole, setDressRole] = useState<DressRole>("Guest");
+  const [guestDressIndex, setGuestDressIndex] = useState(0);
   const [activeGallery, setActiveGallery] = useState<GalleryItem | null>(null);
 
   useEffect(() => {
@@ -285,7 +318,7 @@ export default function HomePage() {
         <section className="section mist" id="dresscode" tabIndex={-1}>
           <div className="section-head reveal"><div className="eyebrow">What to wear</div><h2>Dress for the celebration.</h2><p>A polished look for an elegant indoor reception in the warm tones of our day.</p></div>
           <div className="dress-card reveal">
-            <div className="dress-art"><DressCodeIllustration role={dressRole} /></div>
+            <div className="dress-art"><DressCodeIllustration role={dressRole} guestOptionIndex={guestDressIndex} onGuestOptionChange={setGuestDressIndex} /></div>
             <div className="dress-copy">
               <div className="dress-value">Reception attire</div>
               <p>Think tailored, comfortable, and elegant enough for dinner and conversation.</p>
@@ -298,8 +331,8 @@ export default function HomePage() {
               </div>
               <div className="dress-role-guide" aria-live="polite">
                 <div className="dress-role-label">For {dressRole}</div>
-                <strong>{dressGuides[dressRole].title}</strong>
-                <p>{dressGuides[dressRole].copy}</p>
+                <strong>{dressRole === "Guest" ? guestDressOptions[guestDressIndex].title : dressGuides[dressRole].title}</strong>
+                <p>{dressRole === "Guest" ? guestDressOptions[guestDressIndex].copy : dressGuides[dressRole].copy}</p>
               </div>
               <div className="dress-palette" aria-label="Suggested colour palette">
                 <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#62473b" }} /><span>Chocolate</span></div>
