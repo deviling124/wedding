@@ -49,10 +49,17 @@ type LoadedImageProps = ComponentProps<typeof Image>;
 
 function LoadedImage({ className, onLoad, ...props }: LoadedImageProps) {
   const [loaded, setLoaded] = useState(false);
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const image = imageRef.current;
+    if (image?.complete && image.naturalWidth > 0) setLoaded(true);
+  }, [props.src]);
 
   return (
     <Image
       {...props}
+      ref={imageRef}
       className={`${className ?? ""} image-load-state${loaded ? " is-loaded" : ""}`}
       onLoad={(event) => {
         setLoaded(true);
@@ -89,10 +96,15 @@ const dressRoleImages: Record<DressRole, { src: string; alt: string }> = {
 function DressCodeIllustration({ role }: { role: DressRole }) {
   const image = dressRoleImages[role];
   const [loaded, setLoaded] = useState(false);
+  const imageRef = useRef<HTMLImageElement>(null);
 
-  useEffect(() => setLoaded(false), [image.src]);
+  useEffect(() => {
+    setLoaded(false);
+    const imageElement = imageRef.current;
+    if (imageElement?.complete && imageElement.naturalWidth > 0) setLoaded(true);
+  }, [image.src]);
 
-  return <img key={role} className={`dress-placeholder-image dress-poster-image image-load-state${loaded ? " is-loaded" : ""}`} src={image.src} alt={image.alt} loading="eager" onLoad={() => setLoaded(true)} />;
+  return <img ref={imageRef} key={role} className={`dress-placeholder-image dress-poster-image image-load-state${loaded ? " is-loaded" : ""}`} src={image.src} alt={image.alt} loading="eager" onLoad={() => setLoaded(true)} />;
 }
 
 type GalleryItem = { number: string; imageSrc: string };
