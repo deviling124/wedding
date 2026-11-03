@@ -235,12 +235,12 @@ export default function HomePage() {
         <WeddingCountdown />
 
         <section className="section paper">
-          <div className="section-head reveal"><div className="eyebrow">The shape of the day</div><h2>Meet us under the trees.</h2></div>
+          <div className="section-head reveal"><div className="eyebrow">The shape of the day</div><h2>From ceremony to celebration.</h2></div>
           <div className="timeline reveal">
             <div className="event"><div className="event-time">1:30 PM</div><div><h3>Arrive &amp; exhale</h3><p>Arrive at Immaculate Conception Parish Church and find your seat before the ceremony.</p></div></div>
             <div className="event"><div className="event-time">2:00 PM</div><div><h3>The ceremony</h3><p>Short, sweet, and hopefully only a little bit teary.</p></div></div>
             <div className="event"><div className="event-time">After ceremony</div><div><h3>Celebrate together</h3><p>We’ll continue the celebration at Pramea Grand Pavilion.</p></div></div>
-            <div className="event"><div className="event-time">Evening</div><div><h3>Dinner &amp; toasts</h3><p>Toasts, a long table, and an evening under the trees.</p></div></div>
+            <div className="event"><div className="event-time">Evening</div><div><h3>Dinner &amp; toasts</h3><p>Toasts, dinner, and an evening together.</p></div></div>
           </div>
         </section>
 
@@ -258,7 +258,7 @@ export default function HomePage() {
               </div>
             </article>
             <article className="location-card">
-              <div className="location-photo"><LoadedImage src="/grand-pramea.jpg" alt="Grand Pramea reception entrance" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
+              <div className="location-photo"><LoadedImage src="/reception-venue.png" alt="Pramea Grand Pavilion reception venue" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
               <div className="location-card-content">
                 <div className="location-number">02</div>
                 <div className="eyebrow">Reception · After the ceremony</div>
@@ -271,12 +271,12 @@ export default function HomePage() {
         </section>
 
         <section className="section mist" id="dresscode" tabIndex={-1}>
-          <div className="section-head reveal"><div className="eyebrow">What to wear</div><h2>Dress with ease.</h2><p>A polished garden-formal look in the warm tones of our day.</p></div>
+          <div className="section-head reveal"><div className="eyebrow">What to wear</div><h2>Dress for the celebration.</h2><p>A polished look for an elegant indoor reception in the warm tones of our day.</p></div>
           <div className="dress-card reveal">
             <div className="dress-art"><DressCodeIllustration role={dressRole} /></div>
             <div className="dress-copy">
-              <div className="dress-value">Garden formal</div>
-              <p>Think tailored, romantic, and comfortable enough for dinner, conversation, and a little wandering under the trees.</p>
+              <div className="dress-value">Reception attire</div>
+              <p>Think tailored, comfortable, and elegant enough for dinner and conversation.</p>
               <div className="dress-role-options" role="group" aria-label="Dress code by role">
                 {(Object.keys(dressGuides) as DressRole[]).map((role) => (
                   <button className={`dress-role${dressRole === role ? " selected" : ""}`} type="button" key={role} onClick={() => setDressRole(role)} aria-pressed={dressRole === role}>
