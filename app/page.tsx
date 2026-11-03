@@ -258,7 +258,7 @@ export default function HomePage() {
               </div>
             </article>
             <article className="location-card">
-              <div className="location-photo"><LoadedImage src="/reception-venue.png" alt="Pramea Grand Pavilion reception venue" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
+              <div className="location-photo"><LoadedImage src="/grand-pramea.jpg" alt="Pramea Grand Pavilion reception venue exterior" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
               <div className="location-card-content">
                 <div className="location-number">02</div>
                 <div className="eyebrow">Reception · After the ceremony</div>
