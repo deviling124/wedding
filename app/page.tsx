@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import type { ComponentProps } from "react";
+import type { ComponentProps, PointerEvent as ReactPointerEvent } from "react";
 import EnvelopeCover from "./EnvelopeCover";
 import InvitationNav from "./InvitationNav";
 import ReplyForm from "./ReplyForm";
@@ -114,6 +114,7 @@ function DressCodeIllustration({ role, guestOptionIndex, onGuestOptionChange }: 
   const image = role === "Guest" ? guestDressOptions[guestOptionIndex] : dressRoleImages[role];
   const [loaded, setLoaded] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
+  const swipeStartX = useRef<number | null>(null);
 
   useEffect(() => {
     setLoaded(false);
@@ -121,9 +122,24 @@ function DressCodeIllustration({ role, guestOptionIndex, onGuestOptionChange }: 
     if (imageElement?.complete && imageElement.naturalWidth > 0) setLoaded(true);
   }, [image.src]);
 
+  const handlePointerDown = (event: ReactPointerEvent<HTMLImageElement>) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    swipeStartX.current = event.clientX;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerUp = (event: ReactPointerEvent<HTMLImageElement>) => {
+    if (swipeStartX.current === null) return;
+    const distance = event.clientX - swipeStartX.current;
+    swipeStartX.current = null;
+    if (Math.abs(distance) < 45) return;
+    const direction = distance < 0 ? 1 : -1;
+    onGuestOptionChange((guestOptionIndex + direction + guestDressOptions.length) % guestDressOptions.length);
+  };
+
   return (
     <div className="dress-slider">
-      <img ref={imageRef} key={image.src} className={`dress-placeholder-image dress-poster-image image-load-state${loaded ? " is-loaded" : ""}`} src={image.src} alt={image.alt} loading="eager" onLoad={() => setLoaded(true)} />
+      <img ref={imageRef} key={image.src} className={`dress-placeholder-image dress-poster-image image-load-state${loaded ? " is-loaded" : ""}${role === "Guest" ? " guest-swipe-image" : ""}`} src={image.src} alt={image.alt} loading="eager" draggable={false} onLoad={() => setLoaded(true)} onPointerDown={role === "Guest" ? handlePointerDown : undefined} onPointerUp={role === "Guest" ? handlePointerUp : undefined} onPointerCancel={() => { swipeStartX.current = null; }} />
       {role === "Guest" && (
         <div className="dress-slider-controls" aria-label="Guest dress code options">
           <button className="dress-slider-arrow" type="button" onClick={() => onGuestOptionChange((guestOptionIndex + guestDressOptions.length - 1) % guestDressOptions.length)} aria-label="Previous guest dress code option">‹</button>
