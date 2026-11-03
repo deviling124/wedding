@@ -91,12 +91,6 @@ const guestDressOptions = [
     title: "Casual in wedding colors",
     copy: "Men: casual T-shirt and pants. Women: blouse and pants. Light, mocha, cappuccino, and champagne tones are welcome.",
   },
-  {
-    src: "/guest-dress-code3.png",
-    alt: "Guest attire option: casual T-shirts and pants in darker wedding tones",
-    title: "Relaxed casual",
-    copy: "Men: casual T-shirt and pants. Women: blouse and pants. Chocolate and other comfortable neutral tones are welcome.",
-  },
 ] as const;
 
 const dressRoleImages: Record<Exclude<DressRole, "Guest">, { src: string; alt: string }> = {
