@@ -63,6 +63,21 @@ function MessengerIcon() {
   );
 }
 
+function GiftIllustration() {
+  return (
+    <svg className="gift-drawing" viewBox="0 0 320 240" aria-hidden="true">
+      <ellipse className="gift-drawing-shadow" cx="160" cy="211" rx="106" ry="13" />
+      <rect className="gift-drawing-box" x="66" y="100" width="188" height="103" rx="2" />
+      <path className="gift-drawing-lid" d="M53 82h214v30H53z" />
+      <path className="gift-drawing-ribbon" d="M144 82h32v121h-32z" />
+      <path className="gift-drawing-ribbon" d="M53 93h214v10H53z" />
+      <path className="gift-drawing-line" d="M160 82c-5-27-31-37-48-22-13 12 4 29 48 22Zm0 0c5-27 31-37 48-22 13 12-4 29-48 22Z" />
+      <path className="gift-drawing-spark" d="M63 53v20m-10-10h20M252 43v18m-9-9h18" />
+      <path className="gift-drawing-spark" d="m82 35 4 9m-9-4 9-4m143 28 4 9m-9-4 9-4" />
+    </svg>
+  );
+}
+
 const guestDressOptions = [
   {
     src: "/guest-dress-code.png",
@@ -342,15 +357,18 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="section paper gift-guide-section" id="gifts" tabIndex={-1}>
-          <div className="section-head gift-guide-head reveal">
-            <div className="eyebrow">A little note from us</div>
-            <h2>Gift guide.</h2>
-            <p>Your presence is the greatest gift, but should you wish to contribute, a monetary gift will help us build our future together.</p>
+        <section className="section mist gift-guide-section" id="gifts" tabIndex={-1}>
+          <div className="gift-guide-layout reveal">
+            <div className="section-head gift-guide-head">
+              <div className="eyebrow">A little note from us</div>
+              <h2>Gift guide.</h2>
+              <p>Your presence is the greatest gift, but should you wish to contribute, a monetary gift will help us build our future together.</p>
+            </div>
+            <div className="gift-guide-art"><GiftIllustration /></div>
           </div>
         </section>
 
-        <section className="section mist" id="rsvp" tabIndex={-1}>
+        <section className="section paper" id="rsvp" tabIndex={-1}>
           <div className="rsvp-wrap reveal">
             <div className="rsvp-intro"><div className="eyebrow">Before we plan the table</div><h2>Will you join us?</h2><p>Please reply by December 31, 2026. We’re looking forward to celebrating with you.</p></div>
             <div className="rsvp-card">
@@ -359,7 +377,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="section paper contact-section" id="contact" tabIndex={-1}>
+        <section className="section mist contact-section" id="contact" tabIndex={-1}>
           <div className="contact-panel reveal">
             <div className="contact-copy"><div className="eyebrow">Questions?</div><h2>We’re here to help.</h2><p>Send us a message anytime. We’ll be happy to help with anything about the day.</p></div>
             <div className="messenger-links" aria-label="Contact us on Messenger">

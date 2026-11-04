@@ -137,8 +137,17 @@ h1 { font-size: clamp(4.2rem, 13vw, 10rem); font-style: italic; letter-spacing: 
 .dress-gentle-note strong { color: var(--deep-sage); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; }
 .dress-gentle-note span { line-height: 1.5; }
 .gift-guide-section { padding-top: clamp(48px, 7vw, 88px); padding-bottom: clamp(48px, 7vw, 88px); }
+.gift-guide-layout { max-width: 1120px; margin: auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, .72fr); gap: clamp(32px, 8vw, 108px); align-items: center; }
 .gift-guide-head { margin-bottom: 0; }
 .gift-guide-head p { max-width: 570px; }
+.gift-guide-art { display: grid; place-items: center; min-height: 220px; color: #785b48; }
+.gift-drawing { display: block; width: min(100%, 330px); height: auto; overflow: visible; }
+.gift-drawing-shadow { fill: #d8c5a9; opacity: .48; }
+.gift-drawing-box, .gift-drawing-lid { fill: #eadfd3; stroke: currentColor; stroke-width: 1.6; }
+.gift-drawing-lid { fill: #f8eee4; }
+.gift-drawing-ribbon { fill: #b69b89; stroke: currentColor; stroke-width: 1.2; }
+.gift-drawing-line, .gift-drawing-spark { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; }
+.gift-drawing-spark { stroke: #b49a7f; stroke-width: 1.6; }
 .gallery-grid { max-width: 1120px; margin: auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .gallery-frame { position: relative; min-height: 285px; aspect-ratio: 1 / 1.08; overflow: hidden; padding: 0; border: 1px solid rgba(98,71,59,.22); background: var(--paper); }
 .gallery-button { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; cursor: pointer; }
@@ -405,6 +414,9 @@ html { scroll-padding-top: 84px; }
   .hero h1 { font-size: clamp(3.1rem, 16.5vw, 6.8rem); }
   .hero-note { font-size: .94rem; }
   .countdown { flex-direction: column; gap: 13px; padding: 20px 7%; }
+  .gift-guide-layout { grid-template-columns: 1fr; gap: 22px; }
+  .gift-guide-art { min-height: 170px; }
+  .gift-drawing { width: min(100%, 270px); }
 }
 @media (max-width: 380px) {
   .nav { gap: 9px; padding-inline: 12px; }
