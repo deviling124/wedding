@@ -9,21 +9,6 @@ import ReplyForm from "./ReplyForm";
 
 type DressRole = "Principal Sponsor" | "Secondary Sponsor" | "Guest";
 
-const dressGuides: Record<DressRole, { title: string; copy: string }> = {
-  "Principal Sponsor": {
-    title: "Principal sponsor attire",
-    copy: "Ladies: long formal gown in the wedding motif colors. Gentlemen: traditional Barong Tagalog with black pants.",
-  },
-  "Secondary Sponsor": {
-    title: "Secondary sponsor attire",
-    copy: "Ladies: floor-length chocolate brown formal gown. Gentlemen: chocolate brown formal suit.",
-  },
-  Guest: {
-    title: "Guest attire",
-    copy: "We’d love for you to dress comfortably and elegantly in our wedding motif colors. Gentlemen: polo shirts or collared shirts paired with chinos, slacks, or tailored trousers. Ladies: simple dresses, blouses with skirts, or elegant tops paired with tailored trousers.",
-  },
-};
-
 type Countdown = { days: number; hours: number; minutes: number; seconds: number };
 
 const WEDDING_DATE = "2027-01-30T14:00:00+08:00";
@@ -82,8 +67,12 @@ const guestDressOptions = [
   {
     src: "/guest-dress-code.png",
     alt: "Guest attire: comfortable and elegant wedding attire in the wedding motif colors",
-    title: "Smart casual attire",
-    copy: "We’d love for you to dress comfortably and elegantly in our wedding motif colors. Gentlemen: polo shirts or collared shirts paired with chinos, slacks, or tailored trousers. Ladies: simple dresses, blouses with skirts, or elegant tops paired with tailored trousers.",
+  },
+  {
+    src: "/guest-dress-code2.png",
+    alt: "Guest attire option: casual T-shirts and pants in light and mocha tones",
+    title: "Casual in wedding colors",
+    copy: "Men: casual T-shirt and pants. Women: blouse and pants. Light, mocha, cappuccino, and champagne tones are welcome.",
   },
 ] as const;
 
@@ -128,7 +117,7 @@ function DressCodeIllustration({ role, guestOptionIndex, onGuestOptionChange }: 
   return (
     <div className="dress-slider">
       <img ref={imageRef} key={image.src} className={`dress-placeholder-image dress-poster-image image-load-state${loaded ? " is-loaded" : ""}${role === "Guest" ? " guest-swipe-image" : ""}`} src={image.src} alt={image.alt} loading="eager" draggable={false} onLoad={() => setLoaded(true)} onPointerDown={role === "Guest" ? handlePointerDown : undefined} onPointerUp={role === "Guest" ? handlePointerUp : undefined} onPointerCancel={() => { swipeStartX.current = null; }} />
-      {role === "Guest" && guestDressOptions.length > 1 && (
+      {role === "Guest" && (
         <div className="dress-slider-controls" aria-label="Guest dress code options">
           <button className="dress-slider-arrow" type="button" onClick={() => onGuestOptionChange((guestOptionIndex + guestDressOptions.length - 1) % guestDressOptions.length)} aria-label="Previous guest dress code option">‹</button>
           <div className="dress-slider-dots">
@@ -327,16 +316,11 @@ export default function HomePage() {
               <div className="dress-value">Reception attire</div>
               <p>Think tailored, comfortable, and elegant enough for dinner and conversation.</p>
               <div className="dress-role-options" role="group" aria-label="Dress code by role">
-                {(Object.keys(dressGuides) as DressRole[]).map((role) => (
+                {(["Principal Sponsor", "Secondary Sponsor", "Guest"] as DressRole[]).map((role) => (
                   <button className={`dress-role${dressRole === role ? " selected" : ""}`} type="button" key={role} onClick={() => setDressRole(role)} aria-pressed={dressRole === role}>
                     {role}
                   </button>
                 ))}
-              </div>
-              <div className="dress-role-guide" aria-live="polite">
-                <div className="dress-role-label">For {dressRole}</div>
-                <strong>{dressRole === "Guest" ? guestDressOptions[guestDressIndex].title : dressGuides[dressRole].title}</strong>
-                <p>{dressRole === "Guest" ? guestDressOptions[guestDressIndex].copy : dressGuides[dressRole].copy}</p>
               </div>
               <div className="dress-palette" aria-label="Suggested colour palette">
                 <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#62473b" }} /><span>Chocolate</span></div>
