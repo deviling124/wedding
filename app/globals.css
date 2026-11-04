@@ -84,7 +84,11 @@ h1 { font-size: clamp(4.2rem, 13vw, 10rem); font-style: italic; letter-spacing: 
 .event { display: grid; grid-template-columns: 150px 1fr; gap: 30px; border-top: 1px solid var(--line); padding: 25px 0; }
 .event:last-child { border-bottom: 1px solid var(--line); }
 .event-time { display: grid; align-content: start; justify-items: start; gap: 12px; color: var(--coral); font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-.event-icon { display: block; width: 58px; height: 58px; overflow: visible; color: #5b3b28; }
+.event-icon { display: block; width: 58px; height: 58px; background-image: url('/timeline-icons.webp'); background-repeat: no-repeat; background-size: 200% 200%; }
+.event-icon-clock { background-position: 0 0; }
+.event-icon-church { background-position: 100% 0; }
+.event-icon-couple { background-position: 0 100%; }
+.event-icon-champagne { background-position: 100% 100%; }
 .event h3 { font-size: 1.75rem; margin-bottom: 4px; }
 .event p { color: var(--muted); margin: 0; }
 .location-grid { max-width: 1120px; margin: auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }

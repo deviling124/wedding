@@ -66,30 +66,7 @@ function MessengerIcon() {
 type EventIconKind = "clock" | "church" | "couple" | "champagne";
 
 function EventIcon({ kind }: { kind: EventIconKind }) {
-  const common = {
-    className: "event-icon",
-    viewBox: "0 0 64 64",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 2.5,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-    "aria-hidden": true,
-  };
-
-  if (kind === "clock") {
-    return <svg {...common}><circle cx="32" cy="32" r="23" /><path d="M32 15v18l12 7" /></svg>;
-  }
-
-  if (kind === "church") {
-    return <svg {...common}><path d="M10 54V30l22-13 22 13v24H10Z" /><path d="M32 17V7m-6 5h12M24 54V41a8 8 0 0 1 16 0v13M10 37H4v17h56V37h-6" /></svg>;
-  }
-
-  if (kind === "couple") {
-    return <svg {...common}><circle cx="20" cy="27" r="9" /><circle cx="44" cy="27" r="9" /><path d="M6 55c1-10 6-17 14-17s13 7 14 17M30 55c1-10 6-17 14-17s13 7 14 17M12 10l-4-6m18 7V3m14 8 4-7m8 15 6-3" /></svg>;
-  }
-
-  return <svg {...common}><path d="M11 13h18l-5 23a8 8 0 0 1-8 6h-1a8 8 0 0 1-7-8l3-21Z" /><path d="M35 13h18l3 21a8 8 0 0 1-7 8h-1a8 8 0 0 1-8-6l-5-23Z" /><path d="M17 42 12 57m-7 0h14M47 42l5 15m-2 0h9M29 13h6" /></svg>;
+  return <span className={`event-icon event-icon-${kind}`} aria-hidden="true" />;
 }
 
 function GiftIllustration() {
