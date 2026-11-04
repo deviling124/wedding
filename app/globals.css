@@ -88,7 +88,7 @@ h1 { font-size: clamp(4.2rem, 13vw, 10rem); font-style: italic; letter-spacing: 
 .event p { color: var(--muted); margin: 0; }
 .location-grid { max-width: 1120px; margin: auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .location-card { position: relative; min-height: 300px; overflow: hidden; background: linear-gradient(145deg, #eadfd3 0%, #d8c5a9 100%); border: 1px solid var(--line); box-shadow: var(--shadow); }
-.location-card::after { content: ''; position: absolute; width: 220px; height: 220px; right: -100px; bottom: -108px; border: 1px solid rgba(98,71,59,.22); border-radius: 50%; }
+.location-card::after { content: ''; position: absolute; z-index: 0; width: 178px; height: 119px; right: 4px; bottom: 3px; background: url('/monogram.webp') center / contain no-repeat; opacity: .5; pointer-events: none; }
 .location-number { position: relative; z-index: 1; color: var(--coral); font-family: var(--serif); font-size: 2rem; }
 .location-card .eyebrow, .location-card h3, .location-card p, .location-card .button { position: relative; z-index: 1; }
 .location-photo { position: relative; width: 100%; height: clamp(170px, 20vw, 220px); margin: 0; overflow: hidden; border-bottom: 1px solid rgba(98,71,59,.18); }
