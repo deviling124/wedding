@@ -350,7 +350,9 @@ export default function HomePage() {
                 <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#b69b89" }} /><span>Cappuccino</span></div>
                 <div className="dress-swatch"><span className="dress-swatch-dot" style={{ background: "#d8c5a9" }} /><span>Champagne</span></div>
               </div>
-              <div className="dress-notes"><p><strong>For everyone:</strong> Colour, linen, soft tailoring, and comfortable shoes encouraged.</p><p><strong>A gentle note:</strong> Please leave white and ivory for the couple.</p></div>
+              <div className="dress-notes">
+                <p className="dress-gentle-note"><strong>A gentle note</strong><span>Please leave white and ivory for the couple.</span></p>
+              </div>
             </div>
           </div>
         </section>
