@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og-wedding.jpg",
+        url: "/og-wedding.webp",
         width: 1200,
         height: 630,
         type: "image/jpeg",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Adrian & KC — Our Wedding",
     description: "An invitation to celebrate the wedding of Adrian & KC.",
-    images: ["/og-wedding.jpg"],
+    images: ["/og-wedding.webp"],
   },
 };
 

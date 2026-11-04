@@ -67,7 +67,7 @@ function GiftIllustration() {
   return (
     <Image
       className="gift-drawing"
-      src="/gift-asset.png"
+      src="/gift-asset.webp"
       alt=""
       width={1254}
       height={1254}
@@ -78,11 +78,11 @@ function GiftIllustration() {
 
 const guestDressOptions = [
   {
-    src: "/guest-dress-code.png",
+    src: "/guest-dress-code.webp",
     alt: "Guest attire: comfortable and elegant wedding attire in the wedding motif colors",
   },
   {
-    src: "/guest-dress-code2.png",
+    src: "/guest-dress-code2.webp",
     alt: "Guest attire option: casual T-shirts and pants in light and mocha tones",
     title: "Casual in wedding colors",
     copy: "Men: casual T-shirt and pants. Women: blouse and pants. Light, mocha, cappuccino, and champagne tones are welcome.",
@@ -91,11 +91,11 @@ const guestDressOptions = [
 
 const dressRoleImages: Record<Exclude<DressRole, "Guest">, { src: string; alt: string }> = {
   "Principal Sponsor": {
-    src: "/principal-sponsor-dress-code.png",
+    src: "/principal-sponsor-dress-code.webp",
     alt: "Principal sponsor dress code: long formal gown for ladies and traditional Barong Tagalog with black pants",
   },
   "Secondary Sponsor": {
-    src: "/secondary-sponsor-dress-code.png",
+    src: "/secondary-sponsor-dress-code.webp",
     alt: "Secondary sponsor dress code: floor-length chocolate brown formal gown for ladies and chocolate brown formal suit for gentlemen",
   },
 };
@@ -148,12 +148,12 @@ function DressCodeIllustration({ role, guestOptionIndex, onGuestOptionChange }: 
 type GalleryItem = { number: string; imageSrc: string };
 
 const galleryItems: GalleryItem[] = [
-  { number: "1", imageSrc: "/gallery-placeholder.png" },
-  { number: "2", imageSrc: "/gallery-placeholder.png" },
-  { number: "3", imageSrc: "/gallery-placeholder.png" },
-  { number: "4", imageSrc: "/gallery-placeholder.png" },
-  { number: "5", imageSrc: "/gallery-placeholder.png" },
-  { number: "6", imageSrc: "/gallery-placeholder.png" },
+  { number: "1", imageSrc: "/gallery-placeholder.webp" },
+  { number: "2", imageSrc: "/gallery-placeholder.webp" },
+  { number: "3", imageSrc: "/gallery-placeholder.webp" },
+  { number: "4", imageSrc: "/gallery-placeholder.webp" },
+  { number: "5", imageSrc: "/gallery-placeholder.webp" },
+  { number: "6", imageSrc: "/gallery-placeholder.webp" },
 ];
 
 function GalleryTile({ number, imageSrc, onOpen }: GalleryItem & { onOpen: () => void }) {
@@ -299,7 +299,7 @@ export default function HomePage() {
           <div className="section-head reveal"><div className="eyebrow">Find your way</div><h2>Meet us here.</h2><p>Save these two locations for the day. Each link opens directions in Google Maps.</p></div>
           <div className="location-grid reveal">
             <article className="location-card">
-              <div className="location-photo"><LoadedImage src="/immaculate-church.png" alt="Immaculate Conception Parish Church" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
+              <div className="location-photo"><LoadedImage src="/immaculate-church.webp" alt="Immaculate Conception Parish Church" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
               <div className="location-card-content">
                 <div className="location-number">01</div>
                 <div className="eyebrow">Ceremony · 2:00 PM</div>
@@ -309,7 +309,7 @@ export default function HomePage() {
               </div>
             </article>
             <article className="location-card">
-              <div className="location-photo"><LoadedImage src="/grand-pramea.jpg" alt="Pramea Grand Pavilion reception venue exterior" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
+              <div className="location-photo"><LoadedImage src="/grand-pramea.webp" alt="Pramea Grand Pavilion reception venue exterior" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
               <div className="location-card-content">
                 <div className="location-number">02</div>
                 <div className="eyebrow">Reception · After the ceremony</div>
