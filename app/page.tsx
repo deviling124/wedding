@@ -65,63 +65,14 @@ function MessengerIcon() {
 
 function GiftIllustration() {
   return (
-    <svg className="gift-drawing" viewBox="0 0 360 300" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id="gift-ivory" x1="0" y1="0" x2="1" y2="1">
-          <stop stopColor="#fffdf7" />
-          <stop offset="1" stopColor="#e9dece" />
-        </linearGradient>
-        <linearGradient id="gift-satin" x1="0" y1="0" x2="1" y2="0">
-          <stop stopColor="#a98a60" />
-          <stop offset=".34" stopColor="#e7d3ae" />
-          <stop offset=".58" stopColor="#f2e4c7" />
-          <stop offset="1" stopColor="#b6976c" />
-        </linearGradient>
-        <linearGradient id="gift-bow" x1="0" y1="1" x2=".8" y2="0">
-          <stop stopColor="#a88a65" />
-          <stop offset=".48" stopColor="#dfc9a3" />
-          <stop offset=".75" stopColor="#f4e6ca" />
-          <stop offset="1" stopColor="#c3a57b" />
-        </linearGradient>
-        <radialGradient id="gift-shadow">
-          <stop stopColor="#806344" stopOpacity=".2" />
-          <stop offset="1" stopColor="#806344" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      <ellipse cx="183" cy="263" rx="132" ry="20" fill="url(#gift-shadow)" />
-      <g stroke="#b8a084" strokeWidth=".8" strokeLinejoin="round">
-        <path d="M83 137h192v111a4 4 0 0 1-4 4H87a4 4 0 0 1-4-4Z" fill="url(#gift-ivory)" />
-        <path d="M249 137h26v111a4 4 0 0 1-4 4h-22Z" fill="#d5c4af" opacity=".3" stroke="none" />
-        <path d="M86 147h186" stroke="#c8b69e" />
-        <path d="M163 139h32v113h-32Z" fill="url(#gift-satin)" stroke="none" />
-        <path d="M74 119h210v23H74Z" fill="url(#gift-ivory)" />
-        <path d="m74 119 13-15h184l13 15Z" fill="#fffaf0" />
-        <path d="m163 119 10-15h26l-4 15v23h-32Z" fill="url(#gift-satin)" stroke="none" />
-        <path d="M76 121h206" stroke="#fffdf8" />
-        <path d="M176 108c-12 15-31 31-37 58l16-7 10 12c-1-25 10-43 20-58Z" fill="url(#gift-bow)" />
-        <path d="M186 109c4 23 19 46 43 55l-3-17 15-5c-25-4-35-17-43-34Z" fill="url(#gift-bow)" />
-        <path d="M180 106c-14-35-48-56-64-39-19 21 15 47 64 39Z" fill="url(#gift-bow)" />
-        <path d="M179 105c-21-24-45-32-53-25-6 8 15 22 53 25Z" fill="#9e805d" opacity=".28" stroke="none" />
-        <path d="M185 106c10-36 44-59 62-44 23 20-10 50-62 44Z" fill="url(#gift-bow)" />
-        <path d="M187 104c20-26 44-36 52-28 8 8-14 25-52 28Z" fill="#9e805d" opacity=".25" stroke="none" />
-        <path d="M173 99q11-6 22 0l3 15q-12 5-24 0Z" fill="url(#gift-satin)" />
-        <path d="M179 100q-2 7 1 13" fill="none" stroke="#f9edda" />
-      </g>
-      <g fill="none" stroke="#9c9a7b" strokeWidth="1" strokeLinecap="round">
-        <path d="M208 113q35-28 45-67" />
-        <path d="M232 88q-18-4-12-19 12 5 12 19Z" fill="#c8c6ab" />
-        <path d="M241 74q0-18 16-19-1 13-16 19Z" fill="#d5d2bb" />
-        <path d="M248 57q-13-6-7-18 10 6 7 18Z" fill="#c8c6ab" />
-        <path d="M221 101q8-17 23-12-7 12-23 12Z" fill="#d5d2bb" />
-      </g>
-      <path d="M191 114q38 2 42 57" fill="none" stroke="#aa8959" strokeWidth=".9" />
-      <g transform="rotate(12 233 192)">
-        <path d="m217 169 16-8 16 8v43h-32Z" fill="#fffaf0" stroke="#c7ae88" strokeWidth=".8" />
-        <circle cx="233" cy="170" r="2" fill="none" stroke="#c7ae88" strokeWidth=".8" />
-        <text x="233" y="195" textAnchor="middle" className="gift-drawing-monogram">A &amp; K</text>
-        <path d="M228 203h10" stroke="#c7ae88" strokeWidth=".7" />
-      </g>
-    </svg>
+    <Image
+      className="gift-drawing"
+      src="/gift-asset.png"
+      alt=""
+      width={1254}
+      height={1254}
+      sizes="(max-width: 760px) 270px, 360px"
+    />
   );
 }
 
