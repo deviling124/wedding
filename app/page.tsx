@@ -335,6 +335,14 @@ export default function HomePage() {
           </div>
         </section>
 
+        <section className="section paper gift-guide-section" id="gifts" tabIndex={-1}>
+          <div className="gift-guide-panel reveal">
+            <div className="eyebrow">A little note from us</div>
+            <h2>Gift guide</h2>
+            <p>Your presence is the greatest gift, but should you wish to contribute, a monetary gift will help us build our future together.</p>
+          </div>
+        </section>
+
         <section className="section paper" id="gallery" tabIndex={-1}>
           <div className="section-head reveal"><div className="eyebrow">The two of us</div><h2>A little more us.</h2><p>A few photos of the two of us, from the everyday moments to the ones we’ll always remember.</p></div>
           <div className="gallery-grid reveal">
